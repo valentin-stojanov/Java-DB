@@ -24,3 +24,11 @@ LIMIT 1
 SELECT *
 FROM top_paid;
 
+#06. Delete from Table
+DELETE FROM employees
+WHERE department_id IN(1, 2);
+
+SELECT *
+FROM employees
+ORDER BY id;
+
