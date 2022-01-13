@@ -103,8 +103,164 @@ ADD CONSTRAINT `uq_username`
 UNIQUE (`username`);
 
 # 11.Movies Database
+CREATE DATABASE `movies`;
+
+USE `movies`;
+
+CREATE TABLE `directors` (
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+    `director_name` VARCHAR(30) NOT NULL,
+    `notes` TEXT
+);
+
+INSERT INTO `directors`(`id`,`director_name`, `notes`)
+VALUES
+('1','Pesho',NULL), 
+('2','Ivan',NULL), 
+('3','Gosho',NULL), 
+('4','Tapata',NULL), 
+('5','Ali',NULL);
+
+CREATE TABLE `genres`(
+	`id` INT AUTO_INCREMENT PRIMARY KEY,
+    `genre_name` VARCHAR(200) NOT NULL,
+    `notes` TEXT
+);
+
+INSERT INTO `genres` (`id`, `genre_name`, `notes`)
+VALUES
+('1','Parody',NULL),
+('2','Comedy',NULL),
+('3','Drama',NULL),
+('4','Action',NULL),
+('5','Animation',NULL);
+
+
+CREATE TABLE `categories`(
+	`id` INT AUTO_INCREMENT PRIMARY KEY,
+    `category_name` VARCHAR(200) NOT NULL,
+    `notes` TEXT
+);
+
+INSERT INTO `categories` (`id`, `category_name`, `notes`)
+VALUES
+('1','Parody',NULL),
+('2','Comedy',NULL),
+('3','Drama',NULL),
+('4','Action',NULL),
+('5','Animation',NULL);
+
+CREATE TABLE `movies`(
+	`id` INT AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(200) NOT NULL,
+    `director_id` INT ,
+    `copyright_year` DATE,
+    `length` VARCHAR(20),
+    `genre_id` INT ,
+    `category_id` INT,
+    `rating` FLOAT,
+    `notes` TEXT
+);
+
+INSERT INTO `movies`(`id`, `title`, `director_id`, `copyright_year`,`length`, `genre_id`,`category_id`, `rating`, `notes`)
+VALUES
+('1', 'No comment', '1', NULL, NULL, 1,1, NULL, NULL),
+('2', 'No comment', '2', NULL, NULL, 2,5, NULL, NULL),
+('3', 'No comment', '3', NULL, NULL, 5,4, NULL, NULL),
+('4', 'No comment', '4', NULL , NULL, 4, 3, NULL, NULL),
+('5', 'No comment', '4', NULL , NULL, 3,2, NULL, NULL);
 
 # 12.Car Rental Database
+CREATE DATABASE `car_rental`;
+
+USE `car_rental`;
+
+CREATE TABLE `categories`(
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+	`category` VARCHAR(30) NOT NULL,
+    `daily_rate` FLOAT,
+    `weekly_rate` FLOAT,
+    `monthly_rate` FLOAT,
+    `weekend_rate` FLOAT    
+);
+
+INSERT INTO `categories`
+VALUES
+(1, 'test1', 11.11, 22.22, 30, 40),
+(2, 'test2', 11.11, 22.22, 30, 40),
+(3, 'test3', 11.11, 22.22, 30, 40);
+
+CREATE TABLE `cars`(
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+    `plate_number` VARCHAR(10) NOT NULL,
+    `make` VARCHAR(50),
+    `model` VARCHAR(50),
+    `car_year` DATE,
+    `category_id` INT,
+    `doors` INT,
+    `picture` BLOB,
+    `car_condition` TEXT,
+    `available` BOOLEAN
+);
+
+INSERT INTO `cars`
+VALUES
+(1, '123456', 'testMake', 'TestModel', NULL, 1, 2, NULL, NULL, TRUE),
+(2, '123456', 'testMake', 'TestModel', NULL, 2, 2, NULL, NULL, TRUE),
+(3, '123456', 'testMake', 'TestModel', NULL, 3, 2, NULL, NULL, TRUE);
+CREATE TABLE `employees`(
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+    `first_name` VARCHAR(30) NOT NULL,
+    `last_name` VARCHAR(30) NOT NULL,
+    `title` VARCHAR(20),
+    `notes` TEXT
+);
+
+INSERT INTO `employees`
+VALUES
+(1, 'Test', 'Testov', 'TestTitle', NULL),
+(2, 'Test', 'Testov', 'TestTitle', NULL),
+(3, 'Test', 'Testov', 'TestTitle', NULL);
+
+CREATE TABLE `customers`(
+	`id` INT AUTO_INCREMENT PRIMARY KEY,
+    `driver_licence_number` INT NOT NULL,
+    `full_name` VARCHAR(110) NOT NULL,
+    `address` VARCHAR(110),
+    `zip_code` INT,
+    `notes` TEXT
+);
+
+INSERT INTO `customers`
+VALUES
+(1, 111111, 'tEST tESTOV', NULL, 10000, NULL),
+(2, 111111, 'tEST tESTOV', NULL, 10000, NULL),
+(3, 111111, 'tEST tESTOV', NULL, 10000, NULL);
+
+CREATE TABLE `rental_orders`(
+	`id` INT AUTO_INCREMENT PRIMARY KEY,
+	`employee_id` INT ,
+	`customer_id` INT ,
+	`car_id` INT ,
+	`car_condition` VARCHAR(110),
+	`tank_level` VARCHAR(20),
+	`kilometrage_start` INT,
+	`kilometrage_end` INT,
+	`total_kilometrage` INT,
+	`start_date` DATE,
+	`end_date` DATE,
+	`total_days` INT,
+	`rate_applied` FLOAT,
+	`tax_rate` FLOAT,
+	`order_status` VARCHAR(20),
+	`notes` TEXT
+);
+
+INSERT INTO `rental_orders`
+VALUES
+(1, 1, 1, 1, 'GOOD', 'TESTLEVEL', 220000, 222000, 2000, NULL, NULL, 0, 1.1, 2.2, NULL, NULL),
+(2, 2, 2, 2, 'GOOD', 'TESTLEVEL', 220000, 222000, 2000, NULL, NULL, 0, 1.1, 2.2, NULL, NULL),
+(3, 3, 3, 3, 'GOOD', 'TESTLEVEL', 220000, 222000, 2000, NULL, NULL, 0, 1.1, 2.2, NULL, NULL);
 
 # 13.Basic Insert
 CREATE DATABASE `soft_uni`;
@@ -190,3 +346,26 @@ ORDER BY `name` ASC;
 SELECT *
 FROM `employees`
 ORDER BY `salary` DESC;
+
+# 16.	Basic Select Some Fields
+SELECT `name`
+FROM `towns`
+ORDER BY `name` ASC;
+
+SELECT `name`
+FROM `departments`
+ORDER BY `name` ASC;
+
+SELECT `first_name`, `last_name`, `job_title`, `salary`
+FROM `employees`
+ORDER BY `salary` DESC;
+
+# 17.Increase Employees Salary
+UPDATE `employees`
+SET `salary` = `salary` * 1.1;
+
+SELECT `salary`
+FROM `employees`;
+
+# 18.Delete All Records
+TRUNCATE `occupancies`
