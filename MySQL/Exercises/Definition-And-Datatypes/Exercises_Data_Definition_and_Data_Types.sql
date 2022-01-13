@@ -88,3 +88,7 @@ ALTER TABLE `users`
 DROP PRIMARY KEY,
 ADD CONSTRAINT `pk_users`
 PRIMARY KEY (`id`, `username`);
+
+# 9.Set Default Value of a Field
+ALTER TABLE `users`
+CHANGE `last_login_time` `last_login_time` DATETIME DEFAULT NOW();
