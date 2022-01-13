@@ -133,7 +133,7 @@ CREATE TABLE `employees`(
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
     `first_name` VARCHAR(30) NOT NULL,
     `middle_name` VARCHAR(30) NOT NULL,
-    `lkast_name` VARCHAR(30) NOT NULL,
+    `last_name` VARCHAR(30) NOT NULL,
     `job_title` VARCHAR(20),
     `salary` DECIMAL,
 	`department_id` INT,
@@ -167,3 +167,15 @@ VALUES
 (3, 'Maria','Petrova', 'Ivanova', 'Intern', 5, '2016-08-28', 525.25),
 (4, 'Georgi', 'Terziev', 'Ivanov', 'CEO', 2, '2007-12-09', 3000.00),
 (5, 'Peter', 'Pan', 'Pan', 'Intern', 3, '2016-08-28', 599.88);
+
+# 14.Basic Select All Fields
+SELECT *
+FROM `towns`;
+
+SELECT *
+FROM `departments`;
+
+SELECT *
+FROM `employees`;
+
+# 15.Basic Select All Fields and Order Them
