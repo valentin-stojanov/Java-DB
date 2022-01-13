@@ -85,10 +85,19 @@ VALUES
 
 # 8.Change Primary Key
 ALTER TABLE `users`
-DROP PRIMARY KEY,
+DROP PRIMARY KEY;
+
+ALTER TABLE `users`
 ADD CONSTRAINT `pk_users`
 PRIMARY KEY (`id`, `username`);
 
 # 9.Set Default Value of a Field
 ALTER TABLE `users`
 CHANGE `last_login_time` `last_login_time` DATETIME DEFAULT NOW();
+
+# 10.Set Unique Field
+ALTER TABLE `users`
+DROP PRIMARY KEY,
+ADD PRIMARY KEY `pk_users` (`id`),
+ADD CONSTRAINT `uq_username`
+UNIQUE (`username`);
