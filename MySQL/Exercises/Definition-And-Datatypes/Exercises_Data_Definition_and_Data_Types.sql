@@ -25,11 +25,11 @@ REFERENCES `towns`(`id`);
 
 # 3.	Insert Records in Both Tables
 
-INSERT INTO `towns` (`name`)
+INSERT INTO `towns`
 VALUES
-('Sofia'),
-('Plovdiv'),
-('Varna');
+(1, 'Sofia'),
+(2, 'Plovdiv'),
+(3, 'Varna');
 
 INSERT INTO `minions`
 VALUES
@@ -82,3 +82,9 @@ VALUES
 (3, 'tE3ST', 'TESTpASS', NULL, NOW(), FALSE),
 (4, 't4EST', 'TESTpASS', NULL, NOW(), FALSE),
 (5, '5tEST', 'TESTpASS', NULL, NOW(), FALSE);
+
+# 8.Change Primary Key
+ALTER TABLE `users`
+DROP PRIMARY KEY,
+ADD CONSTRAINT `pk_users`
+PRIMARY KEY (`id`, `username`);
