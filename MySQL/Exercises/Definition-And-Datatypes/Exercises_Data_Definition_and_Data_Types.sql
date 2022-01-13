@@ -47,7 +47,7 @@ DROP TABLE `towns`;
 # 6.	Create Table People
 
 CREATE TABLE `people`(
-	`id` INT PRIMARY KEY AUTO_INCREMENT,
+	`id` INT PRIMARY KEY AUTO_INCREMENT UNIQUE,
     `name` VARCHAR(200) NOT NULL,
     `picture` BLOB,
     `height` FLOAT(4,2),
@@ -66,4 +66,19 @@ VALUES
 (5, 'Test', NULL, 1.75, 72.5, 'm', '1991-08-13', 'aergeargaegegerg');
 
 # 7.	Create Table Users
+CREATE TABLE `users`(
+`id` INT PRIMARY KEY AUTO_INCREMENT UNIQUE,
+`username` VARCHAR(30) UNIQUE,
+`password` VARCHAR(26) NOT NULL,
+`profile_picture` BLOB,
+`last_login_time` DATETIME,
+`is_deleted` BOOLEAN
+);
 
+INSERT INTO `users`
+VALUES
+(1, 'tEST1', 'TESTpASS', NULL, NOW(), FALSE),
+(2, 'tES2T', 'TESTpASS', NULL, NOW(), FALSE),
+(3, 'tE3ST', 'TESTpASS', NULL, NOW(), FALSE),
+(4, 't4EST', 'TESTpASS', NULL, NOW(), FALSE),
+(5, '5tEST', 'TESTpASS', NULL, NOW(), FALSE);
