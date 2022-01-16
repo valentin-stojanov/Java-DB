@@ -14,3 +14,7 @@ ORDER BY `id`;
 # 3.Sum Cost of All Books
 SELECT round(sum(`cost`), 2)
 FROM `books`;
+
+# 4.Days Lived
+SELECT concat_ws(' ', `first_name`, `last_name`) AS `Full Name`, timestampdiff(DAY, `born`, `died`) AS 'Days Lived'
+FROM `authors`;
