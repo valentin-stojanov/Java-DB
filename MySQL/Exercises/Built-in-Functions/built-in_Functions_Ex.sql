@@ -24,3 +24,22 @@ SELECT `first_name`, `last_name`
 FROM `employees`
 WHERE `job_title` NOT LIKE '%engineer%'
 ORDER BY `employee_id`;
+
+# 5.Find Towns with Name Length
+SELECT `name`
+FROM `towns`
+WHERE character_length(`name`) IN(5, 6)
+ORDER BY `name`;
+
+# 6.Find Towns Starting With
+SELECT `town_id`, `name`
+FROM `towns`
+WHERE left(`name`, 1) IN('m', 'k', 'b', 'e')
+ORDER BY `name`;
+
+# 7.Find Towns Not Starting With
+SELECT `town_id`, `name`
+FROM `towns`
+WHERE left(`name`, 1) NOT IN('R', 'b', 'd')
+ORDER BY `name`;
+
