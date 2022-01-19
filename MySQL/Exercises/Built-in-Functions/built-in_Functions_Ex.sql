@@ -83,3 +83,14 @@ FROM `games`
 WHERE year(`start`) IN(2011, 2012)
 ORDER BY `start`, `name`
 LIMIT 50;
+
+# 13.User Email Providers
+SELECT 
+	`user_name`, 
+    substring(`email` ,locate('@', `email`) + 1) AS 'Email Provider'
+FROM `users`
+ORDER BY 
+	`Email Provider`,
+	`user_name`;
+
+
