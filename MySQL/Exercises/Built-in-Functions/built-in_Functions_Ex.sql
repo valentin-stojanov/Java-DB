@@ -93,4 +93,28 @@ ORDER BY
 	`Email Provider`,
 	`user_name`;
 
+# 14.Get Users with IP Address Like Pattern
+SELECT `user_name`, `ip_address`
+FROM `users`
+WHERE `ip_address` lIKE '___.1%.%.___'
+ORDER BY `user_name`;
 
+# 15. Show All Games with Duration
+SELECT 
+	`name`,
+    (
+		CASE
+			WHEN HOUR(`start`) BETWEEN 0 AND 11 THEN 'Morning'
+			WHEN HOUR(`start`) BETWEEN 12 AND 17 THEN 'Afternoon'
+			WHEN HOUR(`start`) BETWEEN 17 AND 24 THEN 'Evening'
+        END
+    ) AS 'part_of_the_day',
+    (
+		CASE
+			WHEN `duration` < 4 THEN 'Extra Short'
+			WHEN `duration` < 7 THEN 'Short'			
+			WHEN `duration` < 11 THEN 'Long'			
+			ELSE 'Extra Long'			
+        END
+    ) AS 'Duration'
+FROM `games`;
