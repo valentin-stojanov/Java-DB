@@ -1,3 +1,4 @@
+# SoftUni Database
 # 01. Find Names of All Employees by First Name
 SELECT `first_name`, `last_name`
 FROM `employees`
@@ -57,6 +58,7 @@ SELECT `first_name`, `last_name`
 FROM `employees`
 WHERE char_length(`last_name`) = 5;
 
+# Geography Database
 # 10.Countries Holding 'A'
 SELECT `country_name`, `iso_code`
 FROM `countries`
@@ -74,4 +76,10 @@ WHERE
 	right(`peak_name`, 1) = left(`river_name`, 1)
 ORDER BY `mix`;
 
+# Diablo Database
 # 12.Games From 2011 and 2012 Year
+SELECT `name`,  date_format(`start`, '%Y-%m-%d') AS `start`
+FROM `games`
+WHERE year(`start`) IN(2011, 2012)
+ORDER BY `start`, `name`
+LIMIT 50;
