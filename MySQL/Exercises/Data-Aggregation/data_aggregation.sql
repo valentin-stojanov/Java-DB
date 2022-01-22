@@ -23,3 +23,10 @@ FROM `wizzard_deposits`
 GROUP BY `deposit_group`
 ORDER BY avg(`magic_wand_size`)
 LIMIT 1;
+
+# 5.Deposits Sum
+SELECT  `deposit_group`, sum(`deposit_amount`) AS `total_sum`
+FROM `wizzard_deposits`
+GROUP BY `deposit_group`
+ORDER BY `total_sum` ASC;
+
