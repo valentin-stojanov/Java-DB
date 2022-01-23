@@ -45,3 +45,11 @@ GROUP BY `deposit_group`
 HAVING `total_sum` < 150000
 ORDER BY `total_sum` DESC;
 
+# 8.Deposit Charge
+SELECT 
+	`deposit_group`,
+    `magic_wand_creator`,
+    min(`deposit_charge`)
+FROM `wizzard_deposits`
+GROUP BY `deposit_group`, `magic_wand_creator`
+ORDER BY `magic_wand_creator`, `deposit_group`;
