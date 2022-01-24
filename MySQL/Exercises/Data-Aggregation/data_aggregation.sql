@@ -102,3 +102,21 @@ FROM `employees`
 WHERE `department_id` IN(2, 5, 7) AND `hire_date` > '2000-01-01'
 GROUP BY `department_id` 
 ORDER BY `department_id`;
+
+# 13. Employees Average Salarie
+CREATE TABLE `hight_payed_employees` AS
+SELECT *
+FROM `employees`
+WHERE `salary` > 30000 AND `manager_id` != 42;
+
+UPDATE `hight_payed_employees`
+SET `salary` = `salary` + 5000
+WHERE `department_id` = 1;
+
+SELECT 
+	`department_id`,
+    avg(`salary`) AS `avg_salary`
+FROM `hight_payed_employees`
+GROUP BY `department_id`
+ORDER BY `department_id`;
+
