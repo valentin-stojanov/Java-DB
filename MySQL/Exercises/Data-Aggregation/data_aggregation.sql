@@ -103,7 +103,7 @@ WHERE `department_id` IN(2, 5, 7) AND `hire_date` > '2000-01-01'
 GROUP BY `department_id` 
 ORDER BY `department_id`;
 
-# 13. Employees Average Salarie
+# 13. Employees Average Salaries
 CREATE TABLE `hight_payed_employees` AS
 SELECT *
 FROM `employees`
@@ -120,3 +120,16 @@ FROM `hight_payed_employees`
 GROUP BY `department_id`
 ORDER BY `department_id`;
 
+# 14. Employees Maximum Salaries
+SELECT 
+	`department_id`,
+    max(`salary`) AS `max_salary`
+FROM `employees`
+GROUP BY `department_id`
+HAVING `max_salary` NOT BETWEEN 30000 AND 70000
+ORDER BY `department_id`;
+
+# 15. Employees Count Salaries
+SELECT COUNT(*) AS `count`
+FROM `employees`
+WHERE `manager_id` IS NULL
