@@ -163,4 +163,11 @@ WHERE e2.`department_id` = e1.`department_id`)
 ORDER BY e1.`department_id`, e1.`employee_id`
 LIMIT 10;
 
+# 18. Departments Total Salaries.
+SELECT 
+	`department_id`, 
+	sum(`salary`) AS `total_salary`
+FROM `employees`
+GROUP BY `department_id`
+ORDER BY `department_id`;
 
