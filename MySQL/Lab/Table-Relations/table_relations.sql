@@ -14,3 +14,14 @@ CREATE TABLE `peaks`(
     FOREIGN KEY (`mountain_id`)
     REFERENCES `mountains`(`id`)
 );
+
+# 2. Trip Organization
+SELECT 
+    `driver_id`,
+    `vehicle_type`,
+    CONCAT(`first_name`, ' ', `last_name`) AS `driver_name`
+FROM
+    `campers` AS c
+        JOIN
+    `vehicles` AS v ON v.`driver_id` = c.`id`;
+
