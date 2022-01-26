@@ -104,3 +104,24 @@ VALUES
 (3, 103),
 (2, 102),
 (2, 103);
+
+# 04. Self-Referencing
+CREATE TABLE `teachers`(
+	`teacher_id` INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(30),
+    `manager_id` INT
+);
+
+INSERT INTO `teachers`
+VALUES
+(101, 'John', null),
+(102, 'Maya', 106),
+(103, 'Silvia', 106),
+(104, 'Ted', 105),
+(105, 'Mark', 101),
+(106, 'Greta', 101);
+
+ALTER TABLE `teachers`
+ADD CONSTRAINT fk_teachers_id_manager_id
+FOREIGN KEY (`manager_id`)
+REFERENCES `teachers`(`teacher_id`);
