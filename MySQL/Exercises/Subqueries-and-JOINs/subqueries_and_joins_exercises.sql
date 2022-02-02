@@ -25,3 +25,17 @@ FROM
     `towns` AS t ON a.`town_id` = t.`town_id`
 ORDER BY e.`first_name` , e.`last_name`
 LIMIT 5;
+
+# 03. Sales Employee
+SELECT 
+    e.`employee_id`,
+    e.`first_name`,
+    e.`last_name`,
+    d.`name`
+FROM
+    `employees` AS e
+        JOIN
+    `departments` AS d ON e.`department_id` = d.`department_id`
+WHERE
+    d.`name` = 'Sales'
+ORDER BY e.`employee_id` DESC;
