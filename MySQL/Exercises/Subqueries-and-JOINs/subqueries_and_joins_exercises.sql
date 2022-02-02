@@ -53,3 +53,16 @@ FROM
 WHERE e.`salary` > 15000
 ORDER BY d.`department_id` DESC
 LIMIT 5;
+
+# 05. Employees Without Project
+SELECT 
+    e.`employee_id`, e.`first_name`
+FROM
+    `employees` AS e
+WHERE
+    e.`employee_id` NOT IN (SELECT 
+            `employee_id`
+        FROM
+            `employees_projects`)
+ORDER BY e.`employee_id` DESC
+LIMIT 3;
