@@ -165,3 +165,12 @@ FROM
 WHERE
     mc.`country_code` = 'BG' AND p.`elevation` > 2835
 ORDER BY p.`elevation` DESC;
+
+# 13. Count Mountain Ranges
+SELECT 
+    `country_code`, COUNT(*) AS 'mountain_range'
+FROM
+    `mountains_countries`
+GROUP BY `country_code`
+HAVING `country_code` IN ('US' , 'BG', 'RU')
+ORDER BY `mountain_range` DESC;
