@@ -141,8 +141,27 @@ ORDER BY e.`employee_id`
 LIMIT 5;
 
 # 11. Min Average Salary
-SELECT avg(`salary`) AS 'min_avg_salary'
-FROM `employees`
+SELECT 
+    AVG(`salary`) AS 'min_avg_salary'
+FROM
+    `employees`
 GROUP BY `department_id`
 ORDER BY `min_avg_salary`
 LIMIT 1;
+
+USE `geography`;
+# 12. Highest Peaks in Bulgaria
+SELECT 
+    mc.`country_code`,
+    m.`mountain_range`,
+    p.`peak_name`,
+    p.`elevation`
+FROM
+    `mountains_countries` AS mc
+        JOIN
+    `mountains` AS m ON mc.`mountain_id` = m.`id`
+        JOIN
+    `peaks` AS p ON m.`id` = p.`mountain_id`
+WHERE
+    mc.`country_code` = 'BG' AND p.`elevation` > 2835
+ORDER BY p.`elevation` DESC;
