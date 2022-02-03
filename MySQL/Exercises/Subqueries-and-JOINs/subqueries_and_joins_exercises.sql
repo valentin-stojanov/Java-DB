@@ -221,3 +221,35 @@ GROUP BY c.`country_name`
 ORDER BY `highest_peak_elevation` DESC , `longest_river_length` DESC , c.`country_name`
 LIMIT 5;
 
+# 15. *Continents and Currencies
+SELECT *
+FROM (SELECT  `continent_code`, `currency_code`, count(*) AS `count`
+	FROM `countries`
+	GROUP BY `continent_code`, `currency_code`
+    HAVING `count` > 1
+	ORDER BY `count` DESC) as `sorted`
+GROUP BY sorted.`continent_code`
+HAVING sorted.`currency_code` IS NOT NULL
+ORDER BY sorted.`continent_code`, sorted.`currency_code`;
+
+#15.2
+SELECT  `continent_code`, `currency_code`, count(*) AS `count`
+FROM `countries`
+GROUP BY `continent_code`, `currency_code`
+HAVING `count` > 1
+ORDER BY `count` DESC;
+
+
+# 15. *Continents and Currencies
+SELECT continent_code, currency_code, COUNT(*) AS 'currency_usage'
+FROM countries AS c
+GROUP BY  continent_code, currency_code
+HAVING currency_usage = (
+	SELECT COUNT(*) AS 'coun'
+    FROM countries AS c1
+    WHERE c1.continent_code = c.continent_code
+    GROUP BY currency_code
+    ORDER BY coun DESC
+    LIMIT 1
+    ) AND currency_usage > 1
+ORDER BY continent_code, currency_code;
