@@ -139,3 +139,10 @@ FROM
     `departments` AS d ON e.`department_id` = d.`department_id`
 ORDER BY e.`employee_id`
 LIMIT 5;
+
+# 11. Min Average Salary
+SELECT avg(`salary`) AS 'min_avg_salary'
+FROM `employees`
+GROUP BY `department_id`
+ORDER BY `min_avg_salary`
+LIMIT 1;
