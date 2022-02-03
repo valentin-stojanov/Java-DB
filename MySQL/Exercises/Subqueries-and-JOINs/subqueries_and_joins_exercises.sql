@@ -188,3 +188,16 @@ WHERE
     c.`continent_code` = 'AF'
 ORDER BY `country_name` ASC
 LIMIT 5;
+
+# 16. Countries without any Mountains
+SELECT 
+    COUNT(*) AS 'country_count'
+FROM
+    `countries` AS c
+WHERE
+    c.`country_code` NOT IN (SELECT 
+            `country_code`
+        FROM
+            `mountains_countries`);
+            
+
