@@ -75,3 +75,9 @@ DETERMINISTIC
     SELECT ufn_get_salary_level(50000); -- TEST INPUT
     DROP FUNCTION ufn_get_salary_level;
 	
+# 06. Employees by Salary Level
+
+SELECT `first_name`, `last_name`
+FROM `employees`
+WHERE `salary` > 50000
+ORDER BY `first_name` DESC, `last_name` DESC;
