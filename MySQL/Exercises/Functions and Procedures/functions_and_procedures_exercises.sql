@@ -124,3 +124,16 @@ CREATE PROCEDURE usp_get_employees_by_salary_level(salary_level VARCHAR(7))
         ORDER BY `first_name` DESC, `last_name` DESC;          
 	END$$
 DELIMITER ;
+
+# 07. Define Function
+
+DELIMITER $$
+CREATE FUNCTION ufn_is_word_comprised(set_of_letters varchar(50), word varchar(50)) 
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	RETURN REGEXP_LIKE(word, CONCAT('^[', set_of_letters, ']*$'));
+END$$
+DELIMITER ;
+
+SELECT ufn_is_word_comprised('oistmiahf', 'halves');
