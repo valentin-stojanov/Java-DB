@@ -137,3 +137,17 @@ END$$
 DELIMITER ;
 
 SELECT ufn_is_word_comprised('oistmiahf', 'halves');
+
+
+# 08. Find Full Name
+DELIMITER $$
+CREATE PROCEDURE usp_get_holders_full_name()
+BEGIN
+SELECT CONCAT_WS(' ', `first_name`, `last_name`) AS 'full_name'
+FROM `account_holders`
+ORDER BY `full_name`;
+END$$
+DELIMITER ;
+
+CALL usp_get_holders_full_name();
+DROP PROCEDURE usp_get_holders_full_name;
