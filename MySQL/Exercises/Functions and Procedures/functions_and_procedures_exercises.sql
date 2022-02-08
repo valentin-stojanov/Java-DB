@@ -151,3 +151,33 @@ DELIMITER ;
 
 CALL usp_get_holders_full_name();
 DROP PROCEDURE usp_get_holders_full_name;
+
+# 9. People with Balance Higher Than
+DELIMITER $$
+CREATE PROCEDURE usp_get_holders_with_balance_higher_than(num DOUBLE)
+BEGIN
+	SELECT `first_name`, `last_name`
+	FROM `account_holders` AS ah
+	JOIN `accounts` AS a
+	ON ah.`id` = a.`account_holder_id`
+	GROUP BY a.`account_holder_id`
+	HAVING sum(a.`balance`) > num
+	ORDER BY a.`account_holder_id`;
+END$$
+DELIMITER ;
+CALL usp_get_holders_with_balance_higher_than(7000);
+DROP PROCEDURE usp_get_holders_with_balance_higher_than;
+
+# 10. Future Value Function
+DELIMITER $$
+CREATE FUNCTION ufn_calculate_future_value(initial_sum DECIMAL(19,4), yearly_interest_rate DECIMAL(19,4), number_of_years INT)
+RETURNS DECIMAL(19, 4)
+DETERMINISTIC
+BEGIN
+	RETURN initial_sum * POW((1+yearly_interest_rate), number_of_years);
+END$$
+DELIMITER ;
+
+SELECT ufn_calculate_future_value(1000.55, 0.08, 5);
+DROP FUNCTION ufn_calculate_future_value;
+
