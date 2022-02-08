@@ -76,8 +76,51 @@ DETERMINISTIC
     DROP FUNCTION ufn_get_salary_level;
 	
 # 06. Employees by Salary Level
+DELIMITER $$
+CREATE FUNCTION udf_get_condition(salary_level VARCHAR(7))
+RETURNS TEXT
+DETERMINISTIC
+BEGIN
+	RETURN (CASE 
+		WHEN salary_level = 'Low' THEN "`salary` < 30000"
+        WHEN salary_level = 'Average' THEN "30000 <= `salary` and `salary` <= 50000"
+        ELSE "`salary` > 50000"
+    END);
+END$$
 
-SELECT `first_name`, `last_name`
-FROM `employees`
-WHERE `salary` > 50000
-ORDER BY `first_name` DESC, `last_name` DESC;
+CREATE PROCEDURE usp_get_employees_by_salary_level(salary_level VARCHAR(7))
+	BEGIN
+    SET @cond = udf_get_condition(salary_level);
+    SET @str = CONCAT('
+		SELECT `first_name`, `last_name`
+		FROM `employees`
+		WHERE ', @cond, '
+        ORDER BY `first_name` DESC, `last_name` DESC');              
+        PREPARE stm FROM @str;
+        EXECUTE stm;
+        DEALLOCATE PREPARE stm;
+	END$$
+    
+DELIMITER ;
+
+SELECT udf_get_condition('High'); -- just for test
+CALL usp_get_employees_by_salary_level('High');
+DROP PROCEDURE usp_get_employees_by_salary_level;
+DROP FUNCTION udf_get_condition;
+
+/* 
+(
+IF( salary_level = 'High',`salary` > 50000, IF(salary_level = 'Average', 30000 <= `salary` and `salary` <= 50000, IF(salary_level = 'Low', `salary` < 30000, NULL)))
+)
+*/ 
+DELIMITER $$
+CREATE PROCEDURE usp_get_employees_by_salary_level(salary_level VARCHAR(7))
+	BEGIN
+		SELECT `first_name`, `last_name`
+		FROM `employees`
+		WHERE (
+			IF( salary_level = 'High',`salary` > 50000, IF(salary_level = 'Average', 30000 <= `salary` and `salary` <= 50000, IF(salary_level = 'Low', `salary` < 30000, NULL)))
+			)
+        ORDER BY `first_name` DESC, `last_name` DESC;          
+	END$$
+DELIMITER ;
