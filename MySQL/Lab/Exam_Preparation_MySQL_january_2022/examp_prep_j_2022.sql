@@ -1,6 +1,7 @@
 CREATE DATABASE fsd;
 USE fsd;
 
+# 01. Table Design
 CREATE TABLE `countries` (
 `id` INT PRIMARY KEY AUTO_INCREMENT,
 `name` VARCHAR(45) NOT NULL
@@ -29,7 +30,7 @@ CREATE TABLE `teams`(
 `id` INT PRIMARY KEY AUTO_INCREMENT,
 `name` VARCHAR(45) NOT NULL,
 `established` DATE NOT NULL,
-`fan_base` BIGINT(20) NOT NULL,
+`fan_base` BIGINT(20) NOT NULL DEFAULT 0,
 `stadium_id` INT NOT NULL,
 CONSTRAINT  `fk_teams_stadiums`
 FOREIGN KEY (`stadium_id`)
@@ -38,30 +39,30 @@ REFERENCES `stadiums`(`id`)
 
 CREATE TABLE `skills_data`(
 `id` INT PRIMARY KEY AUTO_INCREMENT,
-`dribbling` INT,
-`pace` INT,
-`passing` INT,
-`shooting` INT,
-`speed` INT,
-`strength` INT
+`dribbling` INT DEFAULT 0,
+`pace` INT DEFAULT 0,
+`passing` INT DEFAULT 0,
+`shooting` INT DEFAULT 0,
+`speed` INT DEFAULT 0,
+`strength` INT DEFAULT 0
 );
 
 CREATE TABLE `coaches`(
 `id` INT PRIMARY KEY AUTO_INCREMENT,
 `first_name` VARCHAR(10) NOT NULL,
 `last_name` VARCHAR(20) NOT NULL,
-`salary` DECIMAL(10,2),
-`coach_level` INT NOT NULL
+`salary` DECIMAL(10,2) DEFAULT 0,
+`coach_level` INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE `players`(
 `id` INT PRIMARY KEY AUTO_INCREMENT,
 `first_name` VARCHAR(10) NOT NULL,
 `last_name` VARCHAR(20) NOT NULL,
-`age` INT NOT NULL,
+`age` INT NOT NULL DEFAULT 0,
 `position` CHAR(1) NOT NULL,
-`salary` DECIMAL(10,2) NOT NULL,
-`hire_date` DATETIME,
+`salary` DECIMAL(10,2) NOT NULL DEFAULT 0,
+`hire_date` DATE,
 `skills_data_id` INT NOT NULL,
 `team_id` INT,
 CONSTRAINT `fk_players_skills`
@@ -86,3 +87,21 @@ REFERENCES `coaches`(`id`)
 ALTER TABLE `players_coaches`
  ADD CONSTRAINT `PK_players_coaches_players`
 PRIMARY KEY (`player_id`, `coach_id`);
+
+# 02. Insert
+INSERT INTO coaches (first_name, last_name, salary, coach_level)
+SELECT first_name, last_name, salary*2, CHAR_LENGTH(first_name) AS coach_level
+FROM players
+WHERE age >= 45;
+
+# 03. Update
+UPDATE coaches AS c
+JOIN players_coaches AS pc
+ON c.id = pc.coach_id
+SET coach_level = coach_level + 1
+WHERE c.first_name LIKE 'A%';
+
+# 04. Delete
+DELETE
+FROM players
+WHERE age >= 45;
