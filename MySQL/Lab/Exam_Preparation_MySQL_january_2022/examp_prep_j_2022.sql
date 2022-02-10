@@ -105,3 +105,34 @@ WHERE c.first_name LIKE 'A%';
 DELETE
 FROM players
 WHERE age >= 45;
+
+# 05. Players
+SELECT `first_name`, `age`, `salary`
+FROM `players`
+ORDER BY `salary` DESC;
+
+# 06. Young offense players without contract
+SELECT 
+	p.`id`,
+	concat_ws(' ', p.`first_name`, p.`last_name`) AS `full_name`,
+    p.`age`,
+    p.`position`,
+    p.`hire_date`
+FROM `players` AS p
+JOIN `skills_data` AS sd
+ON p.`skills_data_id` = sd.`id`
+WHERE p.`age` < 23
+	AND p.`position` = 'A'
+    AND p.`hire_date` IS NULL
+    AND sd.`strength` > 50
+ORDER BY p.`salary` ASC, p.`age`;
+
+# 07. Detail info for all team
+
+SELECT ANY_VALUE(t.name), t.established, t.fan_base, count(p.id) AS 'count'
+FROM teams AS t
+LEFT JOIN players AS p
+ON p.team_id = t.id
+GROUP BY t.id
+ORDER BY `count` DESC, t.fan_base DESC;
+
