@@ -63,3 +63,31 @@ CONSTRAINT fk_likes_users
 FOREIGN KEY (`user_id`)
 REFERENCES `users`(`id`)
 );
+
+# 02. Insert
+
+INSERT INTO `addresses` (`address`, `town`, `country`,`user_id`)
+SELECT `username`, `password`, `ip`, `age`
+FROM `users`
+WHERE gender = 'M';
+
+
+
+# 03. Update
+-- Solution 1
+UPDATE `addresses`
+SET `country` = 'Blocked'
+WHERE `country` LIKE 'B%';
+
+UPDATE `addresses`
+SET `country` = 'Test'
+WHERE `country` LIKE 'T%';
+
+UPDATE `addresses`
+SET `country` = 'In Progress'
+WHERE `country` LIKE 'P%';
+
+-- Solution 2
+UPDATE `addresses`
+SET `country` = IF(`country` LIKE 'B%', 'Blocked', IF(`country` LIKE 'T%', 'Test', IF(`country` LIKE 'P%', 'In Progress', `country`)));
+
