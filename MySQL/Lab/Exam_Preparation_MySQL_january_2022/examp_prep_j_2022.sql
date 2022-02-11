@@ -136,3 +136,23 @@ ON p.team_id = t.id
 GROUP BY t.id
 ORDER BY `count` DESC, t.fan_base DESC;
 
+#8. The fastest player by towns
+
+SELECT max(sd.`speed`) AS max_speed, tw.`name`
+FROM `skills_data` AS sd
+RIGHT JOIN `players` AS p
+ON p.`skills_data_id` = sd.`id`
+
+RIGHT JOIN `teams` AS tm
+ON p.`team_id` = tm.`id`
+
+RIGHT JOIN `stadiums` AS s
+ON tm.`stadium_id` = s.`id`
+
+RIGHT JOIN `towns` AS tw
+ON s.`town_id` = tw.`id`
+
+WHERE tm.`name` != 'Devify'
+GROUP BY tw.`id`
+ORDER BY max_speed DESC, tw.name ASC;
+
