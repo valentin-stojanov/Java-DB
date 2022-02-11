@@ -91,3 +91,21 @@ WHERE `country` LIKE 'P%';
 UPDATE `addresses`
 SET `country` = IF(`country` LIKE 'B%', 'Blocked', IF(`country` LIKE 'T%', 'Test', IF(`country` LIKE 'P%', 'In Progress', `country`)));
 
+# 04. Delete
+DELETE FROM `addresses`
+WHERE `id` % 3 = 0;
+
+# 05. Users
+SELECT `username`, `gender`, `age`
+FROM `users`
+ORDER BY `age` DESC, `username`;
+
+# 06. Extract 5 Most Commented Photos
+
+SELECT p.`id`, p.`date`, p.`description`, count(*) AS 'commentsCounts'
+FROM `photos` AS p
+JOIN `comments` AS c
+ON c.`photo_id` = p.`id`
+GROUP BY `photo_id`
+ORDER BY `commentsCounts` DESC, p.`id`
+LIMIT 5;
