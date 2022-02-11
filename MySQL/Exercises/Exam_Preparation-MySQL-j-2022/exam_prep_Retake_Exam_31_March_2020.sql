@@ -120,4 +120,4 @@ FROM
     `users_photos` AS up ON u.`id` = up.`user_id`
 WHERE
     `user_id` = `photo_id`
-ORDER BY u.`id`;
+ORDER BY u.`id`; 
