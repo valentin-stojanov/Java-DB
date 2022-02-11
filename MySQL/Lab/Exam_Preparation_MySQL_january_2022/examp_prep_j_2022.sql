@@ -198,4 +198,38 @@ END$$
 
 SELECT udf_stadium_players_count ('Jaxworks') as `count`;
 
+# 11. Find good playmaker by teams
+DELIMITER $$
+CREATE FUNCTION udf_avg_speed ()
+RETURNS DOUBLE
+DETERMINISTIC
+BEGIN
+	RETURN( SELECT avg(`speed`) FROM `skills_data`);
+END$$
+
+
+
+CREATE PROCEDURE udp_find_playmaker(min_dribbling_points INT, team_name VARCHAR(45))
+	BEGIN
+		SELECT 
+			CONCAT_WS(' ', p.`first_name`, p.`last_name`) AS 'full_name', 
+			p.`age`,
+			p.`salary`,
+			sd.`dribbling`,
+			sd.`speed`,
+			tm.`name`
+		FROM `players` AS p
+		JOIN `skills_data` AS sd
+		ON p.`skills_data_id` = sd.`id`
+		JOIN `teams` AS tm
+		ON p.`team_id` = tm.`id`
+		WHERE sd.`dribbling` > min_dribbling_points 
+			AND tm.`name` = team_name
+			AND sd.`speed` > udf_avg_speed()
+		ORDER BY sd.`speed` DESC
+		LIMIT 1;
+	END$$
+    DELIMITER ;
+    
+    CALL udp_find_playmaker (20, 'Skyble');
     
