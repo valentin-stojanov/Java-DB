@@ -179,3 +179,23 @@ FROM
 GROUP BY c.`id`
 ORDER BY total_count_of_players DESC , c.`name`;
 
+# 10. Find all players that play on stadium
+DELIMITER $$
+CREATE FUNCTION udf_stadium_players_count (stadium_name VARCHAR(30))
+RETURNS INTEGER
+DETERMINISTIC
+BEGIN
+	RETURN (
+		SELECT count(p.first_name)
+		FROM players AS p
+		JOIN teams AS tm
+		ON p.team_id = tm.id
+		JOIN stadiums AS sd
+		ON tm.stadium_id = sd.id
+		WHERE sd.name = stadium_name
+);
+END$$
+
+SELECT udf_stadium_players_count ('Jaxworks') as `count`;
+
+    
