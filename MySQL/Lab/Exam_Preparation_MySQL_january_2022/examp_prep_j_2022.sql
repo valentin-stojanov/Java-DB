@@ -129,30 +129,53 @@ ORDER BY p.`salary` ASC, p.`age`;
 
 # 07. Detail info for all team
 
-SELECT ANY_VALUE(t.name), t.established, t.fan_base, count(p.id) AS 'count'
-FROM teams AS t
-LEFT JOIN players AS p
-ON p.team_id = t.id
+SELECT 
+    ANY_VALUE(t.name),
+    t.established,
+    t.fan_base,
+    COUNT(p.id) AS 'count'
+FROM
+    teams AS t
+        LEFT JOIN
+    players AS p ON p.team_id = t.id
 GROUP BY t.id
-ORDER BY `count` DESC, t.fan_base DESC;
+ORDER BY `count` DESC , t.fan_base DESC;
 
 #8. The fastest player by towns
 
-SELECT max(sd.`speed`) AS max_speed, tw.`name`
-FROM `skills_data` AS sd
-RIGHT JOIN `players` AS p
-ON p.`skills_data_id` = sd.`id`
-
-RIGHT JOIN `teams` AS tm
-ON p.`team_id` = tm.`id`
-
-RIGHT JOIN `stadiums` AS s
-ON tm.`stadium_id` = s.`id`
-
-RIGHT JOIN `towns` AS tw
-ON s.`town_id` = tw.`id`
-
-WHERE tm.`name` != 'Devify'
+SELECT 
+    MAX(sd.`speed`) AS max_speed, tw.`name`
+FROM
+    `skills_data` AS sd
+        RIGHT JOIN
+    `players` AS p ON p.`skills_data_id` = sd.`id`
+        RIGHT JOIN
+    `teams` AS tm ON p.`team_id` = tm.`id`
+        RIGHT JOIN
+    `stadiums` AS s ON tm.`stadium_id` = s.`id`
+        RIGHT JOIN
+    `towns` AS tw ON s.`town_id` = tw.`id`
+WHERE
+    tm.`name` != 'Devify'
 GROUP BY tw.`id`
-ORDER BY max_speed DESC, tw.name ASC;
+ORDER BY max_speed DESC , tw.name ASC;
+
+# 09. Total salaries and players by country
+
+SELECT 
+    c.`name`,
+    COUNT(p.id) AS total_count_of_players,
+    SUM(p.salary) AS total_sum_of_salaries
+FROM
+    `countries` AS c
+        LEFT JOIN
+    `towns` AS tw ON tw.`country_id` = c.`id`
+        LEFT JOIN
+    `stadiums` AS st ON st.`town_id` = tw.`id`
+        LEFT JOIN
+    `teams` AS tm ON tm.`stadium_id` = st.`id`
+        LEFT JOIN
+    `players` AS p ON p.`team_id` = tm.`id`
+GROUP BY c.`id`
+ORDER BY total_count_of_players DESC , c.`name`;
 
