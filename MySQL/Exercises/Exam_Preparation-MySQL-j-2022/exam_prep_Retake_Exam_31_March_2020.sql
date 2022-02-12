@@ -147,3 +147,25 @@ FROM photos
 WHERE DAY(`date`) = 10
 ORDER BY `date` DESC;
 
+# 10. Get User’s Photos Count
+DELIMITER $$
+CREATE FUNCTION udf_users_photos_count(username_input VARCHAR(30))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	DECLARE username_id INT;
+    SET username_id := (
+		SELECT `id`
+		FROM `users`
+		WHERE `username` = username_input
+			);
+
+	RETURN (SELECT count(user_id) as count
+	FROM users_photos 
+	WHERE user_id = username_id);
+END$$
+DELIMITER ;
+DROP FUNCTION udf_users_photos_count;
+SELECT udf_users_photos_count('ssantryd') AS photosCount;
+
+
