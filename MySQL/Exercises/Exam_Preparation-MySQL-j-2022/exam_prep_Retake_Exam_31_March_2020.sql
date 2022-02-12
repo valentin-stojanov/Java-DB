@@ -122,4 +122,28 @@ WHERE
     `user_id` = `photo_id`
 ORDER BY u.`id`;
 
+# 08. Count Likes and Comments
+
+SELECT p.`id` AS 'photo_id',
+	count(l.photo_id) AS likes_count,
+    (	if((SELECT count(*)
+		FROM comments
+        WHERE photo_id = p.`id`
+		group by photo_id) IS NULL, 0, (SELECT count(*)
+		FROM comments
+        WHERE photo_id = p.`id`
+		group by photo_id))
+    ) AS 'comments_count'
+FROM `photos` AS p
+LEFT JOIN `likes` AS l
+ON l.`photo_id` = p.`id`
+GROUP BY p.`id`
+ORDER BY `likes_count` DESC, `comments_count` DESC, `photo_id` ASC;
+
+# 09.	The Photo on the Tenth Day of the Month
+
+SELECT concat( LEFT(`description`, 30), '...') AS 'summary', `date`
+FROM photos
+WHERE DAY(`date`) = 10
+ORDER BY `date` DESC;
 
