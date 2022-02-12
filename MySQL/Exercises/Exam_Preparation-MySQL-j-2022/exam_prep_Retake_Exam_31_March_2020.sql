@@ -168,4 +168,28 @@ DELIMITER ;
 DROP FUNCTION udf_users_photos_count;
 SELECT udf_users_photos_count('ssantryd') AS photosCount;
 
+# 11. Increase user age.
+DELIMITER $$
+CREATE PROCEDURE udp_modify_user (address_input VARCHAR(30), town_input VARCHAR(30))
+BEGIN
+	DECLARE user_id_st INT;
+	SET user_id_st := (
+		SELECT `user_id`
+		FROM `addresses`
+		WHERE `address` = address_input AND `town` = town_input);
+	
+	IF user_id_st IS NOT NULL
+			THEN 
+ 			UPDATE `users`
+			SET `age` = `age` + 10
+			WHERE `id` = user_id_st;
+	END IF;
+END$$
+DELIMITER ;
+
+DROP PROCEDURE udp_modify_user;
+CALL udp_modify_user ('97 Valley Edge Parkway', 'Divinópoli');
+SELECT u.username, u.email,u.gender,u.age,u.job_title FROM users AS u
+WHERE u.username = 'eblagden21';
+
 
