@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -25,23 +26,41 @@ public class Main {
         props.setProperty("password", password);
 
         Connection connection = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/soft_uni", props);
+//                .getConnection("jdbc:mysql://localhost:3306/", props);
+                .getConnection("jdbc:mysql://192.168.0.2:3306/", props);
 
-        //Create DB
-        System.out.printf("Do you want to create DB soft_uni?%n <enter> y for 'yes' or pres <enter> for 'no'");
-        String answerSoftUni = sc.nextLine();
-        if (answerSoftUni.equals("y")){
+//https://stackoverflow.com/questions/19101243/error-1130-hy000-host-is-not-allowed-to-connect-to-this-mysql-server
+//       IF--> ERROR 1130 (HY000): Host '' is not allowed to connect to this MySQL server
+
+//        CREATE USER 'root'@'ip_address' IDENTIFIED BY 'some_pass';
+//        GRANT ALL PRIVILEGES ON *.* TO 'root'@'ip_address';
+
+
+        boolean useStm = false;
+        long time =0;
+        try {
+            useStm = connection.createStatement().execute("USE soft_uni;");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Start creating DB soft_uni...");
+            long now = new Date().getTime();
             importSQL(connection, new FileInputStream(new File("./src/DB/soft_uni_database.sql")));
+            long after = new Date().getTime();
+            time = after - now;
+            useStm = true;
         }
 
+        if (useStm){
+            System.out.printf("Database was created successfully for %dms (~%ds)%n", time, time/1000);
+        }
 /*
         System.out.printf("Do you want to create DB diablo_database? %n <enter> y for 'yes' or pres <enter> for 'no'");
         String answerDiablo = sc.nextLine();
         if (answerDiablo.equals("y")){
             importSQL(connection, new FileInputStream(new File("./src/DB/diablo_database.sql")));
         }
-        boolean useStm = connection.createStatement().execute("USE soft_uni;");
 */
+
 
         PreparedStatement stmt =
                 connection.prepareStatement("SELECT * FROM employees WHERE salary > ?");
