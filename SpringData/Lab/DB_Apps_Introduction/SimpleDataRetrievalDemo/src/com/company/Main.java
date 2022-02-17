@@ -26,8 +26,8 @@ public class Main {
         props.setProperty("password", password);
 
         Connection connection = DriverManager
-//                .getConnection("jdbc:mysql://localhost:3306/", props);
-                .getConnection("jdbc:mysql://192.168.0.2:3306/", props);
+                .getConnection("jdbc:mysql://localhost:3306/", props);
+//                .getConnection("jdbc:mysql://192.168.0.2:3306/", props);  //For LAN connection.
 
 //https://stackoverflow.com/questions/19101243/error-1130-hy000-host-is-not-allowed-to-connect-to-this-mysql-server
 //       IF--> ERROR 1130 (HY000): Host '' is not allowed to connect to this MySQL server
@@ -37,30 +37,24 @@ public class Main {
 
 
         boolean useStm = false;
-        long time =0;
+        long time = 0;
         try {
             useStm = connection.createStatement().execute("USE soft_uni;");
+//            useStm = connection.createStatement().execute("USE diablo_database;");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("Start creating DB soft_uni...");
             long now = new Date().getTime();
             importSQL(connection, new FileInputStream(new File("./src/DB/soft_uni_database.sql")));
+//            importSQL(connection, new FileInputStream(new File("./src/DB/diablo_database.sql")));
             long after = new Date().getTime();
             time = after - now;
             useStm = true;
         }
 
-        if (useStm){
-            System.out.printf("Database was created successfully for %dms (~%ds)%n", time, time/1000);
+        if (useStm) {
+            System.out.printf("Database was created successfully for %dms (~%ds)%n", time, time / 1000);
         }
-/*
-        System.out.printf("Do you want to create DB diablo_database? %n <enter> y for 'yes' or pres <enter> for 'no'");
-        String answerDiablo = sc.nextLine();
-        if (answerDiablo.equals("y")){
-            importSQL(connection, new FileInputStream(new File("./src/DB/diablo_database.sql")));
-        }
-*/
-
 
         PreparedStatement stmt =
                 connection.prepareStatement("SELECT * FROM employees WHERE salary > ?");
@@ -70,38 +64,31 @@ public class Main {
         stmt.setDouble(1, Double.parseDouble(salary));
         ResultSet rs = stmt.executeQuery();
 
-        while(rs.next()){
+        while (rs.next()) {
             System.out.println(rs.getString("first_name") + " " + rs.getString("last_name"));
         }
         connection.close();
     }
 
-    public static void importSQL(Connection conn, InputStream in) throws SQLException
-    {
+    public static void importSQL(Connection conn, InputStream in) throws SQLException {
         //https://stackoverflow.com/questions/1497569/how-to-execute-sql-script-file-using-jdbc
         Scanner s = new Scanner(in);
         s.useDelimiter("(;(\r)?\n)|(--\n)");
         Statement st = null;
-        try
-        {
+        try {
             st = conn.createStatement();
-            while (s.hasNext())
-            {
+            while (s.hasNext()) {
                 String line = s.next();
-                if (line.startsWith("/*!") && line.endsWith("*/"))
-                {
+                if (line.startsWith("/*!") && line.endsWith("*/")) {
                     int i = line.indexOf(' ');
                     line = line.substring(i + 1, line.length() - " */".length());
                 }
 
-                if (line.trim().length() > 0)
-                {
+                if (line.trim().length() > 0) {
                     st.execute(line);
                 }
             }
-        }
-        finally
-        {
+        } finally {
             if (st != null) st.close();
         }
     }
