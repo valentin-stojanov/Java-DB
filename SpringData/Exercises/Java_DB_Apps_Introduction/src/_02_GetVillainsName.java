@@ -25,5 +25,6 @@ public class _02_GetVillainsName {
 
             System.out.println(count + " " + villainName);
         }
+        connection.close();
     }
 }

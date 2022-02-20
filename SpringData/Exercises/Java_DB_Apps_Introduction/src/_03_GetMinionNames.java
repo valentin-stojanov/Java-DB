@@ -36,6 +36,12 @@ public class _03_GetMinionNames {
                 str.append(String.format("%d %s %d%n", i, resultSet.getString("minion_name"), resultSet.getInt("age")));
             }
         }
+        connection.close();
+
+        if (str.isEmpty()){
+            System.out.printf("No villain with ID %d exists in the database.", villainId);
+            return;
+        }
 
         System.out.println(str.toString().trim());
     }
