@@ -41,5 +41,7 @@ public class _05_ChangeTownNameCasing {
         System.out.printf("%d town names were affected.%n", affectedRows);
         System.out.println("[" + String.join(", ", towns) + "]");
 
+        connection.close();
+
     }
 }
