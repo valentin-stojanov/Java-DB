@@ -29,7 +29,11 @@ public class _08_IncreaseMinionsAge {
             preparedStatement.setInt(i+1, ints[i]);
         }
 
-        preparedStatement.executeUpdate();
+        // Throws Exception in thread "main" java.sql.SQLFeatureNotSupportedException!!!
+//        Array arr = connection.createArrayOf("INT", Arrays.stream(ints).boxed().toArray());
+//        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE minions SET name = LOWER(name), age = (age + 1) WHERE id IN(?);");
+//        preparedStatement.setArray(1, arr);
+//        preparedStatement.executeUpdate();
 
         PreparedStatement getNames = connection.prepareStatement("SELECT name, age FROM minions;");
         ResultSet resultSet = getNames.executeQuery();
