@@ -16,9 +16,7 @@ public class Student {
     @Column(name = "name", length = 100)
     private String name;
 
-    public Student() {
-
-    }
+    public Student() {}
 
     public Student(String name) {
         this.name = name;
