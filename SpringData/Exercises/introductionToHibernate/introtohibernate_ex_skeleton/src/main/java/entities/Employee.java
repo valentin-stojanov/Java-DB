@@ -129,5 +129,8 @@ public class Employee {
         this.projects = projects;
     }
 
-
+    @Override
+    public String toString() {
+        return  String.format("%s %s from %s - $%.2f", firstName, lastName, department.getName(), salary);
+    }
 }
