@@ -1,9 +1,6 @@
 import entities.Employee;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 public class _05_EmployeeFromDepartment {
@@ -14,15 +11,13 @@ public class _05_EmployeeFromDepartment {
 
         entityManager.getTransaction().begin();
 
-        String department = "Research and Development";
+        TypedQuery<Employee> query = entityManager.createQuery("SELECT e FROM Employee e WHERE e.department.name = 'Research and Development' ORDER BY e.salary, e.id", Employee.class);
+        List<Employee> resultList = query.getResultList();
 
-        List<Employee> employeeList = entityManager.createQuery("SELECT e FROM Employee e WHERE e.department.name = :dep ORDER BY e.salary ASC, e.id ASC", Employee.class)
-                .setParameter("dep", department)
-                .getResultList();
-
-        for (Employee employee : employeeList) {
-            System.out.println(employee.toString());
+        for (Employee e : resultList) {
+            System.out.printf("%s %s from %s - $%.2f%n", e.getFirstName(), e.getLastName(), e.getDepartment().getName(), e.getSalary());
         }
+
 
         entityManager.getTransaction().commit();
     }
