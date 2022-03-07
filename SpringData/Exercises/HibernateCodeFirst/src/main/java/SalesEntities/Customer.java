@@ -1,28 +1,33 @@
 package SalesEntities;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "customers")
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private String email;
     private String creditCardNumber;
+    private Set<Sale> sales;
 
-    public Customer( ) {}
+    public Customer() {
+        this.sales = new HashSet<>();
+    }
 
-    public Long getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -31,7 +36,7 @@ public class Customer {
         this.name = name;
     }
 
-    @Column(name = "email", length = 50, nullable = false, unique = true)
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }
@@ -40,12 +45,21 @@ public class Customer {
         this.email = email;
     }
 
-    @Column(name = "credit_card_number", length = 50)
+    @Column(name = "credit_card_number")
     public String getCreditCardNumber() {
         return creditCardNumber;
     }
 
     public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
+    }
+
+    @OneToMany(mappedBy = "customer")
+    public Set<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(Set<Sale> sales) {
+        this.sales = sales;
     }
 }

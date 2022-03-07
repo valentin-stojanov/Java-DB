@@ -5,36 +5,32 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "products")
-@Inheritance (strategy = InheritanceType.JOINED)
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private Double quantity;
     private BigDecimal price;
-//    private Set<Sale> sales;
-
-//    public Product(Set<Sale> sales) {
-//        this.sales = new HashSet<>();
-//    }
+    private Set<Sale> sales;
 
     public Product() {
+        this.sales = new HashSet<>();
     }
 
-    public Long getId() {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -61,13 +57,12 @@ public class Product {
         this.price = price;
     }
 
-//    @OneToMany(mappedBy = "product")
-//    public Set<Sale> getSales() {
-//        return sales;
-//    }
-//
-//    public void setSales(Set<Sale> sales) {
-//        this.sales = sales;
-//    }
+    @OneToMany(mappedBy = "product")
+    public Set<Sale> getSales() {
+        return sales;
+    }
 
+    public void setSales(Set<Sale> sales) {
+        this.sales = sales;
+    }
 }
