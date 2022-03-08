@@ -1,4 +1,4 @@
-package GringottsEntities;
+package GringotsDB.GringottsEntities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
