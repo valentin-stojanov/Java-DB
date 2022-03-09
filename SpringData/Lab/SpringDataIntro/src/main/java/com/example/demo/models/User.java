@@ -18,7 +18,8 @@ public class User {
 
     private int age;
 
-    @OneToMany(targetEntity = Account.class, mappedBy = "user")
+    @OneToMany(mappedBy = "user")
+//    @OneToMany(targetEntity = Account.class, mappedBy = "user")
     private Set<Account> accounts;
 
     public User() {
@@ -38,5 +39,29 @@ public class User {
 
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
