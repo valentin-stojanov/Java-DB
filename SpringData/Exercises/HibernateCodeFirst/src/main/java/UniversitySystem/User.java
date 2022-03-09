@@ -2,16 +2,17 @@ package UniversitySystem;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "users")
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Entity
+//@Table(name = "users")
+//@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 public abstract class User {
     private Long id;
     private String firstName;
     private String lastName;
     private String phoneNumber;
 
-    public User() {
+    protected User() {
     }
 
     @Id
