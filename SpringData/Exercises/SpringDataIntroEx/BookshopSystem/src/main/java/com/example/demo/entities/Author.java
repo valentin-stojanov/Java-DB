@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "authors")
@@ -20,6 +21,12 @@ public class Author {
     private Set<Book> books;
 
     public Author() {
+        this.books = new HashSet<>();
+    }
+
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public int getId() {
