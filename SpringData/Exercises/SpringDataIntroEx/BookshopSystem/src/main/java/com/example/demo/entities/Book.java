@@ -2,7 +2,7 @@ package com.example.demo.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity(name = "books")
@@ -28,7 +28,7 @@ public class Book {
     private int copies;
 
     @Column(name = "release_date")
-    private LocalDateTime releaseDate;
+    private LocalDate releaseDate;
 
     @Column(name = "age_registration", nullable = false)
     private AgeRestriction ageRestriction;
@@ -40,6 +40,17 @@ public class Book {
     private Set<Category> category;
 
     public Book() {
+    }
+
+    public Book(String title, EditionType editionType, BigDecimal price, int copies, LocalDate releaseDate, AgeRestriction ageRestriction, Author author, Set<Category> category) {
+        this.title = title;
+        this.editionType = editionType;
+        this.price = price;
+        this.copies = copies;
+        this.releaseDate = releaseDate;
+        this.ageRestriction = ageRestriction;
+        this.author = author;
+        this.category = category;
     }
 
     public int getId() {
@@ -90,11 +101,11 @@ public class Book {
         this.copies = copies;
     }
 
-    public LocalDateTime getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDateTime releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
