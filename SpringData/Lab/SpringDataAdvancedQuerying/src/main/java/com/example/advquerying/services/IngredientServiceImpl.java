@@ -38,5 +38,15 @@ public class IngredientServiceImpl implements IngredientService {
         this.ingredientsRepository.updateIngredientsPriceByPercentage(multiplier);
     }
 
+    @Override
+    public void updateIngredientsByNames(List<String> ingredientsList) {
+        this.ingredientsRepository.updateIngredients(ingredientsList);
+    }
+
+    @Override
+    public void deleteIngredientsByName(String ingredient) {
+        this.ingredientsRepository.removeIngredientByName(ingredient);
+    }
+
 
 }

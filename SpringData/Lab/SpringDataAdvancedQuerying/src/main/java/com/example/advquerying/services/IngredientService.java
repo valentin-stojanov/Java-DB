@@ -12,4 +12,8 @@ public interface IngredientService {
     List<Ingredient> ingredientsInNames();
 
     void updateIngredientsPrice(double percentage);
+
+    void updateIngredientsByNames(List<String> ingredientsList);
+
+    void deleteIngredientsByName(String ingredient);
 }

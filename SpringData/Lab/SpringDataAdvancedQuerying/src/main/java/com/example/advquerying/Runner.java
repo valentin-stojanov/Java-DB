@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -37,7 +38,9 @@ public class Runner implements CommandLineRunner {
 //        _06_countShampoosByPrice();
 //        _07_selectShampoosByIngredients();
 //        _08_shampoosByIngredientCount();
-        _10_updateIngredientsByPrice();
+//        _10_updateIngredientsByPrice();
+//        _11_updateIngredientsByNames();
+        _09_deleteIngredientsByName();
     }
 
     private void _01_selectShampoosBySize() {
@@ -84,8 +87,16 @@ public class Runner implements CommandLineRunner {
                 .forEach(System.out::println);
     }
 
+    private void _09_deleteIngredientsByName() {
+        this.ingredientService.deleteIngredientsByName("Apple");
+    }
+
     private void _10_updateIngredientsByPrice() {
         this.ingredientService.updateIngredientsPrice(10);
+    }
+
+    private void _11_updateIngredientsByNames(){
+        this.ingredientService.updateIngredientsByNames(List.of("Macadamia Oil", "Mineral-Collagen"));
     }
 
 }
