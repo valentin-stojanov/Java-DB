@@ -36,11 +36,9 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        -------------------------------------------------
         Scanner scanner = new Scanner(System.in);
 
+        _10_totalbookCopies();
 
-        String input = scanner.nextLine();
-
-
-
+//        _09_countBook(scanner);
 //        _08_bookTitleSearch(scanner.nextLine());
 //        _07_booksSearch(scanner.nextLine());
 //        _06_authorsSearch(scanner.nextLine());
@@ -51,6 +49,19 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        _01_booksTitleByAgeRestriction(scanner.nextLine());
 
 
+    }
+
+    private void _10_totalbookCopies() {
+        this.bookService.totalBookCopies()
+                .forEach(System.out::println);
+    }
+
+    private void _09_countBook(Scanner scanner) {
+        String input = scanner.nextLine();
+        int length = Integer.parseInt(input);
+        int totalBooks = this.bookService.countBookWithTitleLongerThan(length);
+
+        System.out.printf("There are %d books with longer title than %d symbols%n", totalBooks, length );
     }
 
     private void _08_bookTitleSearch(String input) {

@@ -163,5 +163,18 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public int countBookWithTitleLongerThan(int length) {
+        return this.bookRepository.countBooksByTitleLength(length);
+    }
+
+    @Override
+    public List<String> totalBookCopies() {
+        return this.bookRepository.bookCopies()
+                .stream()
+                .map(e -> String.format("%s %s - %d", e.getFirstName(), e.getLastName(), e.getTotalCopies()))
+                .collect(Collectors.toList());
+    }
+
 
 }

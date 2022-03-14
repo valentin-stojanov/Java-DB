@@ -1,6 +1,7 @@
 package com.example.springintro.repository;
 
 import com.example.springintro.model.entity.AgeRestriction;
+import com.example.springintro.model.entity.AuthorNamesWithTotalCount;
 import com.example.springintro.model.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +32,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 
     List<Book> findByAuthorLastNameStartingWith(String str);
+
+    @Query("SELECT COUNT(b) FROM Book b WHERE length(b.title) > :length")
+    int countBooksByTitleLength(int length);
+
+    @Query("SELECT a.firstName AS firstName, a.lastName AS lastName, SUM(b.copies) AS totalCopies" +
+            " FROM Author a" +
+            " JOIN a.books AS b GROUP BY b.author" +
+            " ORDER BY totalCopies")
+    List<AuthorNamesWithTotalCount> bookCopies();
 }

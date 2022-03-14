@@ -28,4 +28,8 @@ public interface BookService {
     List<String> bookContainingString(String str);
 
     List<String> booksWrittenByAuthorsLastNameContains(String str);
+
+    int countBookWithTitleLongerThan(int length);
+
+    List<String> totalBookCopies();
 }
