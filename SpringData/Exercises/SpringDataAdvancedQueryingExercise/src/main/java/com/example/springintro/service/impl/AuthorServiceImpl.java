@@ -3,6 +3,7 @@ package com.example.springintro.service.impl;
 import com.example.springintro.model.entity.Author;
 import com.example.springintro.repository.AuthorRepository;
 import com.example.springintro.service.AuthorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -19,9 +20,16 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
 
+    @Autowired
     public AuthorServiceImpl(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
+
+
+
+
+
+
 
     @Override
     public void seedAuthors() throws IOException {
@@ -59,6 +67,14 @@ public class AuthorServiceImpl implements AuthorService {
                         author.getFirstName(),
                         author.getLastName(),
                         author.getBooks().size()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> autorsSearchNamesEndsWith(String str) {
+        return this.authorRepository.findAllByFirstNameEndingWith(str)
+                .stream()
+                .map(a -> String.format("%s %s", a.getFirstName(), a.getLastName()))
                 .collect(Collectors.toList());
     }
 }

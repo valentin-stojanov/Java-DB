@@ -5,6 +5,7 @@ import com.example.springintro.repository.BookRepository;
 import com.example.springintro.service.AuthorService;
 import com.example.springintro.service.BookService;
 import com.example.springintro.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class BookServiceImpl implements BookService {
     private final AuthorService authorService;
     private final CategoryService categoryService;
 
+    @Autowired
     public BookServiceImpl(BookRepository bookRepository, AuthorService authorService, CategoryService categoryService) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
@@ -98,4 +100,68 @@ public class BookServiceImpl implements BookService {
         return new Book(editionType, releaseDate, copies, price, ageRestriction, title, author, categories);
 
     }
+
+
+
+    @Override
+    public List<Book> booksTitleByAgeRestriction(String ageRestriction) {
+
+        AgeRestriction restriction = AgeRestriction.valueOf(ageRestriction.toUpperCase());
+        return this.bookRepository.findAllByAgeRestriction(restriction);
+    }
+
+    @Override
+    public List<String> selectGoldEditionBook5000Copies() {
+        return this.bookRepository.findAllByCopiesLessThan(5000)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Book> selectBookByPriceLowerThan5HigherThan40() {
+        BigDecimal lower = BigDecimal.valueOf(5);
+        BigDecimal higher = BigDecimal.valueOf(40);
+        return this.bookRepository.findAllByPriceLessThanOrPriceGreaterThan(lower, higher);
+    }
+
+
+
+    public List<String> selectNotReleasedBook(int releaseYear) {
+        LocalDate before = LocalDate.of(releaseYear, 1, 1);
+        LocalDate after = LocalDate.of(releaseYear, 12, 31);
+
+        return this.bookRepository.findAllByReleaseDateBeforeOrReleaseDateAfter(before, after)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> bookReleasedBeforeDate(String strDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date = LocalDate.from(formatter.parse(strDate));
+        return this.bookRepository.findAllByReleaseDateBefore(date)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> bookContainingString(String search) {
+        return this.bookRepository.findByTitleContaining(search)
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> booksWrittenByAuthorsLastNameContains(String str) {
+        return this.bookRepository.findByAuthorLastNameStartingWith(str)
+                .stream()
+                .map(b -> String.format("%s (%s %s)", b.getTitle(), b.getAuthor().getFirstName(), b.getAuthor().getLastName()))
+                .collect(Collectors.toList());
+    }
+
+
 }

@@ -9,6 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Scanner;
 
 @Component
 public class CommandLineRunnerImpl implements CommandLineRunner {
@@ -32,8 +34,63 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //         printAllAuthorsAndNumberOfTheirBooks();
 //         printALlBooksByAuthorNameOrderByReleaseDate("George", "Powell");
 //        -------------------------------------------------
+        Scanner scanner = new Scanner(System.in);
 
 
+        String input = scanner.nextLine();
+
+
+
+//        _08_bookTitleSearch(scanner.nextLine());
+//        _07_booksSearch(scanner.nextLine());
+//        _06_authorsSearch(scanner.nextLine());
+//        _05_booksReleasedBeforeDate(scanner.nextLine());
+//        _04_notReleasedBook(scanner.nextLine());
+//        _03_booksByPrice();
+//        _02_goldenBooks();
+//        _01_booksTitleByAgeRestriction(scanner.nextLine());
+
+
+    }
+
+    private void _08_bookTitleSearch(String input) {
+        this.bookService.booksWrittenByAuthorsLastNameContains(input)
+                .forEach(System.out::println);
+    }
+
+    private void _07_booksSearch(String input) {
+        this.bookService.bookContainingString(input)
+                .forEach(System.out::println);
+    }
+
+    private void _06_authorsSearch(String input) {
+        this.authorService.autorsSearchNamesEndsWith(input)
+                .forEach(System.out::println);
+    }
+
+    private void _05_booksReleasedBeforeDate(String dateStr) {
+        this.bookService.bookReleasedBeforeDate(dateStr)
+                .forEach(System.out::println);
+    }
+
+    private void _04_notReleasedBook(String yearStr) {
+        this.bookService.selectNotReleasedBook(Integer.parseInt(yearStr))
+                .forEach(System.out::println);
+    }
+
+    private void _03_booksByPrice() {
+        this.bookService.selectBookByPriceLowerThan5HigherThan40()
+                .forEach(b -> System.out.printf("%s - $%.2f%n", b.getTitle(), b.getPrice()));
+    }
+
+    private void _02_goldenBooks() {
+        this.bookService.selectGoldEditionBook5000Copies()
+                .forEach(System.out::println);
+    }
+
+    private void _01_booksTitleByAgeRestriction(String input) {
+        this.bookService.booksTitleByAgeRestriction(input)
+                .forEach(b -> System.out.println(b.getTitle()));
     }
 
     private void printALlBooksByAuthorNameOrderByReleaseDate(String firstName, String lastName) {
