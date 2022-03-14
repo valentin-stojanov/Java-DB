@@ -4,6 +4,7 @@ import com.example.springintro.model.entity.Book;
 import com.example.springintro.service.AuthorService;
 import com.example.springintro.service.BookService;
 import com.example.springintro.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private final AuthorService authorService;
     private final BookService bookService;
 
+    @Autowired
     public CommandLineRunnerImpl(CategoryService categoryService, AuthorService authorService, BookService bookService) {
         this.categoryService = categoryService;
         this.authorService = authorService;
@@ -24,16 +26,17 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        seedData();
+//         seedData();
+//         printAllBooksAfterYear(2000);
+//         printAllAuthorsNamesWithBooksWithReleaseDateBeforeYear(1990);
+//         printAllAuthorsAndNumberOfTheirBooks();
+//         printALlBooksByAuthorNameOrderByReleaseDate("George", "Powell");
+//        -------------------------------------------------
 
-        //printAllBooksAfterYear(2000);
-//        printAllAuthorsNamesWithBooksWithReleaseDateBeforeYear(1990);
-     //   printAllAuthorsAndNumberOfTheirBooks();
-        pritnALlBooksByAuthorNameOrderByReleaseDate("George", "Powell");
 
     }
 
-    private void pritnALlBooksByAuthorNameOrderByReleaseDate(String firstName, String lastName) {
+    private void printALlBooksByAuthorNameOrderByReleaseDate(String firstName, String lastName) {
         bookService
                 .findAllBooksByAuthorFirstAndLastNameOrderByReleaseDate(firstName, lastName)
                 .forEach(System.out::println);
