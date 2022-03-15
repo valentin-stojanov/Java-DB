@@ -176,5 +176,11 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public String bookInformationByTitle(String title) {
+        BookInformationByTitle bookInfo = this.bookRepository.findBookByTitle(title);
+        return bookInfo.getInfoStr();
+    }
+
 
 }

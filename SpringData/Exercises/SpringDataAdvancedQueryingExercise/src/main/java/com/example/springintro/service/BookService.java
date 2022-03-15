@@ -32,4 +32,6 @@ public interface BookService {
     int countBookWithTitleLongerThan(int length);
 
     List<String> totalBookCopies();
+
+    String bookInformationByTitle(String title);
 }

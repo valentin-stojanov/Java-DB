@@ -9,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 @Component
@@ -36,8 +35,10 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        -------------------------------------------------
         Scanner scanner = new Scanner(System.in);
 
-        _10_totalbookCopies();
+        String title = scanner.nextLine();
+        System.out.println(this.bookService.bookInformationByTitle(title));
 
+//        _10_totalBookCopies();
 //        _09_countBook(scanner);
 //        _08_bookTitleSearch(scanner.nextLine());
 //        _07_booksSearch(scanner.nextLine());
@@ -51,7 +52,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
     }
 
-    private void _10_totalbookCopies() {
+    private void _10_totalBookCopies() {
         this.bookService.totalBookCopies()
                 .forEach(System.out::println);
     }
