@@ -34,10 +34,11 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //         printALlBooksByAuthorNameOrderByReleaseDate("George", "Powell");
 //        -------------------------------------------------
         Scanner scanner = new Scanner(System.in);
+//
 
-        String title = scanner.nextLine();
-        System.out.println(this.bookService.bookInformationByTitle(title));
 
+        _12_IncreaseBookCopies(scanner.nextLine(), scanner.nextLine());
+//        _11_reducedBook(scanner.nextLine());
 //        _10_totalBookCopies();
 //        _09_countBook(scanner);
 //        _08_bookTitleSearch(scanner.nextLine());
@@ -50,6 +51,18 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        _01_booksTitleByAgeRestriction(scanner.nextLine());
 
 
+    }
+
+    private void _12_IncreaseBookCopies(String date, String copies) {
+        int amount = Integer.parseInt(copies);
+        int booksUpdated = this.bookService.addCopiesToBookAfter(date, amount);
+
+        System.out.printf("%d books are released after %s, so total of %d book copies were added",
+                booksUpdated, date, amount * booksUpdated);
+    }
+
+    private void _11_reducedBook(String title) {
+        System.out.println(this.bookService.bookInformationByTitle(title));
     }
 
     private void _10_totalBookCopies() {

@@ -34,4 +34,7 @@ public interface BookService {
     List<String> totalBookCopies();
 
     String bookInformationByTitle(String title);
+
+    int addCopiesToBookAfter(String date, int amount);
+
 }

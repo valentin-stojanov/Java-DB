@@ -5,8 +5,10 @@ import com.example.springintro.model.entity.AuthorNamesWithTotalCount;
 import com.example.springintro.model.entity.Book;
 import com.example.springintro.model.entity.BookInformationByTitle;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -47,4 +49,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             " FROM Book b" +
             " WHERE b.title = :title")
     BookInformationByTitle findBookByTitle(String title);
+
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Book b" +
+            " SET b.copies = b.copies + :amount" +
+            " WHERE b.releaseDate > :after")
+    int addCopiesToBooksAfter(LocalDate after, int amount);
 }

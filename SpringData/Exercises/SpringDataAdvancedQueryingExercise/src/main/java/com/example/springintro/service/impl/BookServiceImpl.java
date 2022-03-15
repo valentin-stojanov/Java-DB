@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -180,6 +181,17 @@ public class BookServiceImpl implements BookService {
     public String bookInformationByTitle(String title) {
         BookInformationByTitle bookInfo = this.bookRepository.findBookByTitle(title);
         return bookInfo.getInfoStr();
+    }
+
+    @Override
+    public int addCopiesToBookAfter(String date, int amount) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+
+//        System.out.println("Local date ie : " + formatter.getLocale().toString());
+
+        LocalDate after = LocalDate.parse(date, formatter);
+
+        return this.bookRepository.addCopiesToBooksAfter(after, amount);
     }
 
 
