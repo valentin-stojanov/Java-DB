@@ -1,9 +1,11 @@
 package com.example.demo.productsShop.entities;
 
+import com.example.demo.productsShop.entities.categories.Category;
+import com.example.demo.productsShop.entities.users.User;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity(name = "products")

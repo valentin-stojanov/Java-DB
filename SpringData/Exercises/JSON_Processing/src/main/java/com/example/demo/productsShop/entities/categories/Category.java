@@ -1,7 +1,6 @@
-package com.example.demo.productsShop.entities;
+package com.example.demo.productsShop.entities.categories;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "categories")
 public class Category {
