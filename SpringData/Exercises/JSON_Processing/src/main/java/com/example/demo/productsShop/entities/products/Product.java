@@ -1,4 +1,4 @@
-package com.example.demo.productsShop.entities;
+package com.example.demo.productsShop.entities.products;
 
 import com.example.demo.productsShop.entities.categories.Category;
 import com.example.demo.productsShop.entities.users.User;

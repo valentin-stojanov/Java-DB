@@ -19,6 +19,7 @@ public class ProductShopRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
 //        this.seedService.seedUsers();
 //        this.seedService.seedCategories();
+        this.seedService.seedProducts();
 
     }
 }
