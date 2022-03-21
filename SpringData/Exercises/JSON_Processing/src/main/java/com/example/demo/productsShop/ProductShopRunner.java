@@ -3,6 +3,7 @@ package com.example.demo.productsShop;
 import com.example.demo.productsShop.entities.products.ProductWithoutBuyerDTO;
 import com.example.demo.productsShop.services.ProductService;
 import com.example.demo.productsShop.services.SeedService;
+import com.example.demo.productsShop.services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,15 @@ public class ProductShopRunner implements CommandLineRunner {
     private final SeedService seedService;
     private final ProductService productService;
     private final Gson gson;
+    private final UserService userService;
 
     @Autowired
     public ProductShopRunner(SeedService seedService,
-                             ProductService productService) {
+                             ProductService productService,
+                             UserService userService) {
         this.seedService = seedService;
         this.productService = productService;
+        this.userService = userService;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
@@ -30,13 +34,13 @@ public class ProductShopRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        this.seedService.seedUsers();
-//        this.seedService.seedCategories();
-//        this.seedService.seedProducts();
 //        this.seedService.seedAll();
 
         //Query 1
-        productsInRange();
+//        productsInRange();
+
+        this.userService.getAllWithSoldProducts();
+
     }
 
     private void productsInRange() {
