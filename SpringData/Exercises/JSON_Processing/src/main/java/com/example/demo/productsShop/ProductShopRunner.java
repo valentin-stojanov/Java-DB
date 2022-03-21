@@ -1,6 +1,7 @@
 package com.example.demo.productsShop;
 
 import com.example.demo.productsShop.entities.products.ProductWithoutBuyerDTO;
+import com.example.demo.productsShop.entities.users.UserWithSoldProductDTO;
 import com.example.demo.productsShop.services.ProductService;
 import com.example.demo.productsShop.services.SeedService;
 import com.example.demo.productsShop.services.UserService;
@@ -17,8 +18,8 @@ public class ProductShopRunner implements CommandLineRunner {
 
     private final SeedService seedService;
     private final ProductService productService;
-    private final Gson gson;
     private final UserService userService;
+    private final Gson gson;
 
     @Autowired
     public ProductShopRunner(SeedService seedService,
@@ -36,11 +37,21 @@ public class ProductShopRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
 //        this.seedService.seedAll();
 
-        //Query 1
+////       Query 1
 //        productsInRange();
 
-        this.userService.getAllWithSoldProducts();
+////       Query 2 – Successfully Sold Products
+//        successfullySoldProducts();
 
+
+    }
+
+    private void successfullySoldProducts() {
+        List<UserWithSoldProductDTO> usersWithSoldProducts = this.userService.getUsersWithSoldProducts();
+
+        String json = gson.toJson(usersWithSoldProducts);
+
+        System.out.println(json);
     }
 
     private void productsInRange() {
