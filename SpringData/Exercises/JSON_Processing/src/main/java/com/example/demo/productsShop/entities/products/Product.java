@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "products")
+@Entity
+@Table(name = "products")
 public class Product {
 
     @Id
