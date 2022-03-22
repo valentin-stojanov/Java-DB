@@ -1,7 +1,9 @@
 package com.example.demo.productsShop;
 
+import com.example.demo.productsShop.entities.categories.CategoryStatisticsDTO;
 import com.example.demo.productsShop.entities.products.ProductWithoutBuyerDTO;
 import com.example.demo.productsShop.entities.users.UserWithSoldProductDTO;
+import com.example.demo.productsShop.services.CategoryService;
 import com.example.demo.productsShop.services.ProductService;
 import com.example.demo.productsShop.services.SeedService;
 import com.example.demo.productsShop.services.UserService;
@@ -20,13 +22,16 @@ public class ProductShopRunner implements CommandLineRunner {
     private final ProductService productService;
     private final UserService userService;
     private final Gson gson;
+    private final CategoryService categoryService;
 
     @Autowired
     public ProductShopRunner(SeedService seedService,
                              ProductService productService,
-                             UserService userService) {
+                             UserService userService,
+                             CategoryService categoryService) {
         this.seedService = seedService;
         this.productService = productService;
+        this.categoryService = categoryService;
         this.userService = userService;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -43,7 +48,16 @@ public class ProductShopRunner implements CommandLineRunner {
 ////       Query 2 – Successfully Sold Products
 //        successfullySoldProducts();
 
+//        Query 3 – Categories by Products Count
+        categoryStatistics();
 
+    }
+
+    private void categoryStatistics() {
+        List<CategoryStatisticsDTO> categoryStatisticsDTOS = this.categoryService.categoriesByProductsCount();
+
+        String json = gson.toJson(categoryStatisticsDTOS);
+        System.out.println(json);
     }
 
     private void successfullySoldProducts() {
