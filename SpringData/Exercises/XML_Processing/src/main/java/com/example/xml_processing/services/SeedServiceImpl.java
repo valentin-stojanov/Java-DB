@@ -16,9 +16,9 @@ import java.util.*;
 
 @Service
 public class SeedServiceImpl implements SeedService {
-    private final String USERS_JSON_PATH = "src/main/resources/productsShop/users.xml";
-    private final String CATEGORIES_JSON_PATH = "src/main/resources/productsShop/categories.xml";
-    private final String PRODUCTS_JSON_PATH = "src/main/resources/productsShop/products.xml";
+    private final String USERS_XML_PATH = "src/main/resources/productsShop/users.xml";
+    private final String CATEGORIES_XML_PATH = "src/main/resources/productsShop/categories.xml";
+    private final String PRODUCTS_XML_PATH = "src/main/resources/productsShop/products.xml";
 
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
