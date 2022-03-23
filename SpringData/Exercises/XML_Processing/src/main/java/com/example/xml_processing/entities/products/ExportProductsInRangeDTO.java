@@ -1,16 +1,13 @@
 package com.example.xml_processing.entities.products;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @XmlRootElement(name = "products")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ExportProductsInRangeDTO {
 
-    @XmlAttribute(name = "product")
+    @XmlElement(name = "product")
     private List<ProductWithAttributesDTO> products;
 
     public List<ProductWithAttributesDTO> getProducts() {

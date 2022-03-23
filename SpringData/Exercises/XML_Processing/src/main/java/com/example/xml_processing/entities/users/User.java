@@ -104,7 +104,7 @@ public class User {
         this.friends = friends;
     }
 
-    private String getFullName(){
+    public String getFullName(){
         if (this.firstName == null){
             return this.lastName;
         }

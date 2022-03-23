@@ -10,6 +10,6 @@ import java.util.List;
 @Service
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    List<Product> findAllByPriceBetweenAbdBuyerIsNullOrderByPriceDesc
+    List<Product> findAllByPriceBetweenAndBuyerIsNullOrderByPriceDesc
             (BigDecimal rangeFrom, BigDecimal rangeTo);
 }
