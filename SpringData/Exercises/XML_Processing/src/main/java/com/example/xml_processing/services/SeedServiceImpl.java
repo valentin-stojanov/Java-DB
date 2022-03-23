@@ -1,17 +1,29 @@
 package com.example.xml_processing.services;
 
+import com.example.xml_processing.entities.categories.CategoriesListDTO;
 import com.example.xml_processing.entities.categories.Category;
 import com.example.xml_processing.entities.products.Product;
+import com.example.xml_processing.entities.products.ProductsListDTO;
 import com.example.xml_processing.entities.users.User;
+import com.example.xml_processing.entities.users.UserImportDTO;
+import com.example.xml_processing.entities.users.UsersListDTO;
 import com.example.xml_processing.repositories.CategoryRepository;
 import com.example.xml_processing.repositories.ProductRepository;
 import com.example.xml_processing.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.FileNotFoundException;
+
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.*;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -38,19 +50,59 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedUsers() throws FileNotFoundException {
+    public void seedUsers() throws IOException, JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(UsersListDTO.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
+        BufferedReader xmlReader = Files.newBufferedReader(Path.of(USERS_XML_PATH));
+        UsersListDTO usersDTOS = (UsersListDTO) unmarshaller.unmarshal(xmlReader);
+
+        List<User> userList = usersDTOS
+                .getUsers()
+                .stream()
+                .map(e -> this.modelMapper.map(e, User.class))
+                .collect(Collectors.toList());
+
+        this.userRepository.saveAll(userList);
+    }
+
+    @Override
+    public void seedCategories() throws IOException, JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(CategoriesListDTO.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+        BufferedReader reader = Files.newBufferedReader(Path.of(CATEGORIES_XML_PATH));
+        CategoriesListDTO unmarshal = (CategoriesListDTO) unmarshaller.unmarshal(reader);
+
+        List<Category> categoryList = unmarshal
+                .getCategories()
+                .stream()
+                .map(e -> this.modelMapper.map(e, Category.class))
+                .collect(Collectors.toList());
+
+        this.categoryRepository.saveAll(categoryList);
 
     }
 
     @Override
-    public void seedCategories() throws FileNotFoundException {
+    public void seedProducts() throws IOException, JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(ProductsListDTO.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-    }
+        BufferedReader xmlReader = Files.newBufferedReader(Path.of(PRODUCTS_XML_PATH));
 
-    @Override
-    public void seedProducts() throws FileNotFoundException {
+        ProductsListDTO unmarshal = (ProductsListDTO) unmarshaller.unmarshal(xmlReader);
 
+        List<Product> productList = unmarshal
+                .getProducts()
+                .stream()
+                .map(e -> this.modelMapper.map(e, Product.class))
+                .map(this::setRandomCategory)
+                .map(this::setRandomSeller)
+                .map(this::setRandomBuyer)
+                .collect(Collectors.toList());
+
+        this.productRepository.saveAll(productList);
     }
 
     private Product setRandomCategory(Product product) {
