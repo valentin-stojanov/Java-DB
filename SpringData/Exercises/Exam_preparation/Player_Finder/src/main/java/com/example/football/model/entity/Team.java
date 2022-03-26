@@ -32,6 +32,14 @@ public class Team {
     public Team() {
     }
 
+    public Town getTown() {
+        return town;
+    }
+
+    public void setTown(Town town) {
+        this.town = town;
+    }
+
     public long getId() {
         return id;
     }
