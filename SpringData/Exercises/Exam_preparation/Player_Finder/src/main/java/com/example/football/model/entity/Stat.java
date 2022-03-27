@@ -10,10 +10,13 @@ public class Stat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(columnDefinition = "FLOAT(7,2)")
     private float shooting;
 
+    @Column(columnDefinition = "FLOAT(7,2)")
     private float passing;
 
+    @Column(columnDefinition = "FLOAT(7,2)")
     private float endurance;
 
     public Stat() {

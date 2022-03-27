@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <stats>
     <stat>
+        <passing>40.80</passing>
+        <shooting>80.80</shooting>
+        <endurance>-33.09</endurance>
+    </stat>
+    <stat>
         <passing>74.02</passing>
         <shooting>30.7</shooting>
         <endurance>26.0</endurance>
