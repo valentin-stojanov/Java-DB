@@ -86,6 +86,18 @@ public class Player {
         this.position = position;
     }
 
+    public void setTown(Town town) {
+        this.town = town;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public void setStat(Stat stat) {
+        this.stat = stat;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
