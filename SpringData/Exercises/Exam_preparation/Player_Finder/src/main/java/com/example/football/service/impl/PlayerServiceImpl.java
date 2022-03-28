@@ -120,9 +120,13 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public String exportBestPlayers() {
-        BestPlayerDTO bestPlayerDTO = this.playerRepository.findAllOrderByStatShootingDesc();
-        String info = bestPlayerDTO.getInfo();
-        System.out.println();
-        return null;
+        StringBuilder result = new StringBuilder();
+        List<BestPlayerDTO> bestPlayerDTO = this.playerRepository.findAllOrderByStatShootingDesc();
+        for (BestPlayerDTO playerDTO : bestPlayerDTO) {
+            String info = playerDTO.getInfo();
+            result.append(info);
+        }
+
+        return result.toString();
     }
 }
