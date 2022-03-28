@@ -1,5 +1,6 @@
 package com.example.football.service.impl;
 
+import com.example.football.model.dto.BestPlayerDTO;
 import com.example.football.model.dto.ImportPlayerDTO;
 import com.example.football.model.dto.ImportPlayersDTO;
 import com.example.football.model.entity.Player;
@@ -119,6 +120,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public String exportBestPlayers() {
+        BestPlayerDTO bestPlayerDTO = this.playerRepository.findAllOrderByStatShootingDesc();
+        String info = bestPlayerDTO.getInfo();
+        System.out.println();
         return null;
     }
 }
