@@ -11,5 +11,5 @@ public interface ShopService {
 
     String readShopsFileContent() throws IOException;
 
-    String importShops() throws JAXBException, FileNotFoundException;
+    String importShops() throws JAXBException, IOException;
 }
