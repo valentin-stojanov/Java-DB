@@ -77,6 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
 
                     customer.setTown(optionalTown.get());
 
+                    this.customerRepository.save(customer);
                     result.append(String.format("Successfully imported Customer %s %s - %s\n",
                             customer.getFirstName(), customer.getLastName(), customer.getEmail()));
                 } else {
