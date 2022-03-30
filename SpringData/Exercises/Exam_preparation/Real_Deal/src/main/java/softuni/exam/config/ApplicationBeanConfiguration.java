@@ -11,11 +11,10 @@ import softuni.exam.util.ValidationUtil;
 @Configuration
 public class ApplicationBeanConfiguration {
 
-	//ToDo
-
     @Bean
     public Gson gson() {
-        return null;
+        return new GsonBuilder()
+                .create();
     }
 
     @Bean
@@ -25,7 +24,7 @@ public class ApplicationBeanConfiguration {
 
     @Bean
     public ModelMapper modelMapper() {
-        return null;
+        return new ModelMapper();
     }
 
 }
