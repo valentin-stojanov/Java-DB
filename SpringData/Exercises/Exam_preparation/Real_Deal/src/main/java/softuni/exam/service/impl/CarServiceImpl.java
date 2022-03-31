@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import softuni.exam.models.dto.CarExportDTO;
 import softuni.exam.models.dto.CarImportDTO;
 import softuni.exam.models.entity.Car;
 import softuni.exam.repository.CarRepository;
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,6 +71,10 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public String getCarsOrderByPicturesCountThenByMake() {
-        return null;
+        List<CarExportDTO> allByPictureCount = this.carRepository.findAllOrOrderByPictures();
+        return allByPictureCount
+                .stream()
+                .map(CarExportDTO::getStringInfo)
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 }

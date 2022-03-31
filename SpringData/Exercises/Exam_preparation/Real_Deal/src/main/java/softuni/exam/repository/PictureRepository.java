@@ -6,5 +6,4 @@ import softuni.exam.models.entity.Picture;
 
 @Repository
 public interface PictureRepository extends JpaRepository<Picture, Long> {
-
 }

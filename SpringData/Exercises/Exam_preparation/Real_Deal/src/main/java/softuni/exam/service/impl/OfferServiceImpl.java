@@ -2,6 +2,7 @@ package softuni.exam.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
 import softuni.exam.models.dto.OfferDTO;
 import softuni.exam.models.dto.OffersImportDTO;
 import softuni.exam.models.entity.Car;
@@ -19,7 +20,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
