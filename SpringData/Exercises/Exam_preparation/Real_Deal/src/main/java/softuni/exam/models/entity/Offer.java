@@ -3,6 +3,7 @@ package softuni.exam.models.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,7 @@ public class Offer {
     private boolean hasGoldStatus;
 
     @Column(name = "added_on")
-    private LocalDate addedOn;
+    private LocalDateTime addedOn;
 
     @ManyToOne
     private Car car;
@@ -93,11 +94,11 @@ public class Offer {
         this.hasGoldStatus = hasGoldStatus;
     }
 
-    public LocalDate getAddedOn() {
+    public LocalDateTime getAddedOn() {
         return addedOn;
     }
 
-    public void setAddedOn(LocalDate addedOn) {
+    public void setAddedOn(LocalDateTime addedOn) {
         this.addedOn = addedOn;
     }
 }

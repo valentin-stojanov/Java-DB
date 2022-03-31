@@ -1,17 +1,15 @@
 package softuni.exam.models.dto;
 
+import javax.xml.bind.annotation.*;
+
+@XmlRootElement(name = "car")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CarIdDTO {
 
+    @XmlElement(name = "id")
     private long Id;
-
-    public CarIdDTO() {
-    }
 
     public long getId() {
         return Id;
-    }
-
-    public void setId(long id) {
-        Id = id;
     }
 }

@@ -3,6 +3,7 @@ package softuni.exam.models.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "cars")
@@ -22,6 +23,17 @@ public class Car {
 
     @Column(name = "registered_on")
     private LocalDate registeredOn;
+
+    @OneToMany(mappedBy = "car")
+    private Set<Picture> pictures;
+
+    public Set<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(Set<Picture> pictures) {
+        this.pictures = pictures;
+    }
 
     public Car() {
     }
