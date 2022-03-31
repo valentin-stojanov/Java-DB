@@ -64,7 +64,7 @@ public class CarServiceImpl implements CarService {
             }
             Car car = this.modelMapper.map(carDTO, Car.class);
             this.carRepository.save(car);
-            result.append(String.format("Successfully imported car - %s - %s\n",carDTO.getMake(), carDTO.getModel()));
+            result.append(String.format("Successfully imported car - %s - %s\n",car.getMake(), car.getModel()));
         }
         return result.toString();
     }
