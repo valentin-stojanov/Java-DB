@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,7 +61,13 @@ public class PictureServiceImpl implements PictureService {
                 result.append("Invalid Picture\n");
                 continue;
             }
+            String pictureImportDTOPath = pictureImportDTO.getPath();
+            Optional<Picture> optionalPicture = this.pictureRepository.findByPath(pictureImportDTOPath);
+            if (optionalPicture.isPresent()){
+                continue;
+            }
             Picture picture = this.modelMapper.map(pictureImportDTO, Picture.class);
+            this.pictureRepository.save(picture);
             result.append(String.format("Successfully imported Picture, with size %.2f\n", picture.getSize()));
         }
         return result.toString();
@@ -67,6 +75,12 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public String exportPictures() {
-        return null;
+
+        List<Picture> pictureList = this.pictureRepository.findAllBySizeGreaterThanOrderBySizeAsc((double)30000);
+        String result = pictureList
+                .stream()
+                .map(p -> String.format("%.2f - %s", p.getSize(), p.getPath()))
+                .collect(Collectors.joining(System.lineSeparator()));
+        return result;
     }
 }

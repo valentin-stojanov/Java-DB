@@ -4,6 +4,7 @@ import jdk.dynalink.linker.LinkerServices;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +23,13 @@ public class User {
     @OneToOne
     private Picture profilePicture;
 
+    public Picture getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(Picture profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 
     public User() {
     }

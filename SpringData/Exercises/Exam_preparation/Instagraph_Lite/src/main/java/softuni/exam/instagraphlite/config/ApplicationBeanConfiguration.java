@@ -3,8 +3,11 @@ package softuni.exam.instagraphlite.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import softuni.exam.instagraphlite.models.dto.UserDTO;
+import softuni.exam.instagraphlite.models.entity.User;
 import softuni.exam.instagraphlite.util.ValidationUtil;
 import softuni.exam.instagraphlite.util.impl.ValidationUtilImpl;
 
@@ -25,6 +28,12 @@ public class ApplicationBeanConfiguration {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
+//        PropertyMap<UserDTO, User> userMap = new PropertyMap<UserDTO, User>() {
+//            @Override
+//            protected void configure() {
+//
+//            }
+//        };
         return modelMapper;
     }
 }
