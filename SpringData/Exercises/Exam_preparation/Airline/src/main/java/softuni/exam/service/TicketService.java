@@ -1,12 +1,15 @@
 package softuni.exam.service;
 
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
+
 public interface TicketService {
 
     boolean areImported();
 
-    String readTicketsFileContent();
+    String readTicketsFileContent() throws IOException;
 	
-	String importTickets();
+	String importTickets() throws IOException, JAXBException;
 
 }
