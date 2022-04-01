@@ -3,6 +3,7 @@ package softuni.exam.instagraphlite.service.impl;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import softuni.exam.instagraphlite.models.dto.UserExportDTO;
 import softuni.exam.instagraphlite.models.dto.UserImportDTO;
 import softuni.exam.instagraphlite.models.entity.Picture;
 import softuni.exam.instagraphlite.models.entity.User;
@@ -15,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -82,7 +84,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String exportUsersWithTheirPosts() {
-
-        return null;
+        List<UserExportDTO> userExportDTOS = this.userRepository.orderAllUsers();
+        String collect = userExportDTOS
+                .stream()
+                .map(d -> d.userInfo())
+                .collect(Collectors.joining(System.lineSeparator()));
+        return collect;
     }
 }

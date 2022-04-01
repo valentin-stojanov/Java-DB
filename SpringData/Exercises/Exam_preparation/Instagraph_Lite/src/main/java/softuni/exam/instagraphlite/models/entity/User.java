@@ -23,6 +23,9 @@ public class User {
     @OneToOne
     private Picture profilePicture;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Post> posts;
+
     public Picture getProfilePicture() {
         return profilePicture;
     }
