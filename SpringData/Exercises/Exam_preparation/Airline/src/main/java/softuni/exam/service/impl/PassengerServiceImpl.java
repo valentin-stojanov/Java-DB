@@ -5,8 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import softuni.exam.models.Passenger;
 import softuni.exam.models.Town;
+import softuni.exam.models.dto.PassengerExportDTO;
 import softuni.exam.models.dto.PassengerImportDTO;
 import softuni.exam.repository.PassengerRepository;
+import softuni.exam.repository.TicketRepository;
 import softuni.exam.repository.TownRepository;
 import softuni.exam.service.PassengerService;
 import softuni.exam.util.ValidationUtil;
@@ -15,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,18 +30,20 @@ public class PassengerServiceImpl implements PassengerService {
     private final ValidationUtil validationUtil;
     private final ModelMapper modelMapper;
     private final TownRepository townRepository;
+    private final TicketRepository ticketRepository;
 
     public PassengerServiceImpl(PassengerRepository passengerRepository,
                                 Gson gson,
                                 ValidationUtil validationUtil,
                                 ModelMapper modelMapper,
-                                TownRepository townRepository) {
+                                TownRepository townRepository, TicketRepository ticketRepository) {
         this.passengerRepository = passengerRepository;
         this.townRepository = townRepository;
 
         this.gson = gson;
         this.validationUtil = validationUtil;
         this.modelMapper = modelMapper;
+        this.ticketRepository = ticketRepository;
     }
 
     @Override
@@ -83,6 +88,11 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public String getPassengersOrderByTicketsCountDescendingThenByEmail() {
-        return null;
+        List<PassengerExportDTO> exportDTOS = this.passengerRepository.gatAllPassengersOrdered();
+        System.out.println();
+        return exportDTOS
+                .stream()
+                .map(PassengerExportDTO::getPassengerInfo)
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 }
